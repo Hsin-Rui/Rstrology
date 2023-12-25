@@ -13,7 +13,7 @@ date_to_jd(date, hour, minute, timezone = "Asia/Taipei")
 
 \item{minute}{An integer of minute}
 
-\item{timezone}{A string of time zone. It has to be time zone that lubridate recognizes.}
+\item{timezone}{A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"}
 }
 \value{
 An integer of Julian Day

@@ -15,7 +15,7 @@ date_to_jd <- function(date, hour, minute, timezone="Asia/Taipei"){
   #hour <- 20
   #minute <- 30
   
-  date <- lubridate::as_datetime(date, tz="Asia/Taipei")
+  date <- lubridate::as_datetime(date, tz=timezone)
   lubridate::hour(date) <- hour
   date <- lubridate::as_datetime(date, tz="UTC")
   
