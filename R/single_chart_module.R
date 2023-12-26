@@ -5,10 +5,12 @@
 #' 
 
 single_chart_ui <- function(id) {
+  requireNamespace("shiny")
+
   ns <- NS(id)
   
   fluidPage(
-    includeCSS("www/custom.css"),
+    includeCSS("inst/www/custom.css"),
     sidebarPanel(
       HTML("<h4>Please enter data</h4>
            <p>Click to change time<br></>"),
@@ -28,6 +30,8 @@ single_chart_ui <- function(id) {
 
 
 single_chart_server <- function(id){
+  requireNamespace("shiny")
+  
     moduleServer(id, function(input, output, session){
     output[["date"]]  <- renderText({
         as.character(input[["date"]])
