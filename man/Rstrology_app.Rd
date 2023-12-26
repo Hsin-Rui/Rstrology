@@ -6,6 +6,9 @@
 \usage{
 Rstrology_app(...)
 }
+\arguments{
+\item{...}{other parameters}
+}
 \description{
 Horoscope calculation app
 }

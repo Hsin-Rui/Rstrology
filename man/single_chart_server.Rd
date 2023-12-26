@@ -6,6 +6,9 @@
 \usage{
 single_chart_server(id)
 }
+\arguments{
+\item{id}{Shiny module ID}
+}
 \description{
 Server part shiny: single chart
 }

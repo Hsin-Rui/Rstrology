@@ -6,6 +6,9 @@
 \usage{
 single_chart_ui(id)
 }
+\arguments{
+\item{id}{shiny module ID}
+}
 \description{
 UI part Shiny module: single chart
 }
