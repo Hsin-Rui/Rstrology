@@ -17,3 +17,5 @@ Imports:
     shinyDatetimePickers,
     shinythemes,
     swephR
+Depends: 
+    R (>= 3.5.0)
