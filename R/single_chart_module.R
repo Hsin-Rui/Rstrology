@@ -1,5 +1,7 @@
 #' UI part Shiny module: single chart
 #' 
+#' @param id shiny module ID
+#' 
 #' @import shiny
 #' @import shinyDatetimePickers
 #' 
@@ -23,6 +25,8 @@ single_chart_ui <- function(id) {
 }
 
 #' Server part shiny: single chart
+#' 
+#' @param id Shiny module ID
 #' 
 #' @import shiny
 #' @import shinyDatetimePickers

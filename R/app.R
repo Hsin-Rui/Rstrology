@@ -1,5 +1,7 @@
 #' Horoscope calculation app
 #'
+#' @param ... other parameters
+#' 
 #' @import shiny
 #' @import shinythemes
 #' @export
