@@ -10,23 +10,14 @@ Rstrology_app <- function(...){
   library(shinythemes)
   
   ui <- navbarPage(
-    "占星計算機", theme=shinytheme("flatly"),
-        tabPanel("星盤1",
-                sidebarPanel(
-                  dateInput("date", label="日期")
-                ),
-                mainPanel(
-                  tabsetPanel(type="tabs",
-                              tabPanel("星盤2", shiny::textOutput("text"))
-                              )
-                )
+    "Horoscope Calculator", theme=shinytheme("flatly"),
+        tabPanel("Sinle Chart",
+                single_chart_ui("single_chart")
         )
   )
   
   server <- function(input, output, session){
-    output$text <- renderText(
-      as.character(input$date)
-    )
+      single_chart_server("single_chart")
   }
   
   

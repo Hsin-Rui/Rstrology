@@ -3,5 +3,6 @@
 export(Rstrology_app)
 import(lubridate)
 import(shiny)
+import(shinyDatetimePickers)
 import(shinythemes)
 import(swephR)

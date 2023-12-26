@@ -4,7 +4,7 @@
 \alias{Rstrology_app}
 \title{Horoscope calculation app}
 \usage{
-Rstrology_app()
+Rstrology_app(...)
 }
 \description{
 Horoscope calculation app

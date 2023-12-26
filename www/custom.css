@@ -1,0 +1,12 @@
+.react-datetime-picker{
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+ 
+}
+
+.datetimePicker {
+   border-radius: 3px;
+   background-color: #D4d8d885;
+   margin-right: -6px;
+}
