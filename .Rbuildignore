@@ -1,2 +1,5 @@
 ^\.github$
 ^Rstrology.Rproj
+^.*\.Rproj$
+^\.Rproj\.user$
+^app.R

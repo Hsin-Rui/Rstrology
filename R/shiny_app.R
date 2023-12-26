@@ -8,9 +8,7 @@
 #' 
 
 Rstrology_app <- function(...){
-  requireNamespace("shiny")
-  requireNamespace("shinythemes")
-  
+
   ui <- navbarPage(
     "Horoscope Calculator", theme=shinytheme("flatly"),
         tabPanel("Sinle Chart",
