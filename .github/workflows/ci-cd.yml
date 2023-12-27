@@ -7,7 +7,9 @@ name: CI-CD
 on:
   # Triggered on push and pull request events
   push:
+    branches: [main, master]
   pull_request:
+    branches: [main, master]
   # Allow manual runs from the Actions tab
   workflow_dispatch:
 
