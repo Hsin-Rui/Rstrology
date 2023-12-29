@@ -9,20 +9,18 @@
 #' 
 
 
-date_to_jd <- function(date, hour, minute, timezone="Asia/Taipei"){
+date_to_jd <- function(date, timezone="Asia/Taipei"){
   
-  #date <- "1986-02-13"
-  #hour <- 20
-  #minute <- 30
+  if (isFALSE(is.POSIXct(date))) rlang::abort(message="input is not POSIXct")
   
-  date <- lubridate::as_datetime(date, tz=timezone)
-  lubridate::hour(date) <- hour
-  date <- lubridate::as_datetime(date, tz="UTC")
+  date <- as.character(date)
+  date <- lubridate::as_datetime(as.character(date), tz="Asia/Taipei")
   
   year <- lubridate::year(date)
   month <- lubridate::month(date)
   day <- lubridate::day(date)
   hour <- lubridate::hour(date)
+  minute <- lubridate::minute(date)
   
   hour <- hour + minute/60
   
