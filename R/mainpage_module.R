@@ -28,10 +28,7 @@ mainpage_ui <- function(id, i18n){
       tags$div(id="readmehere",
                div(id="readmediv",
                     includeHTML(i18n$get_translations()["ui_mainpage_readmefile","zh"])))
-    # mainPanel(
-    #   includeHTML("./inst/html/main_zh.html")
-    #   textOutput(ns("choices"))
-    #   )
+    
   )
 }
   

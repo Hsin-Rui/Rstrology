@@ -6,3 +6,4 @@
 ^deploy$
 ^LICENSE\.md$
 ^rsconnect$
+^data-raw$

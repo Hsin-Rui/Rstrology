@@ -25,3 +25,4 @@ Imports:
     swephR
 Depends: 
     R (>= 3.5.0)
+LazyData: true
