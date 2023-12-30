@@ -2,8 +2,9 @@
 # source: https://www.geonames.org/
 # database documentation: https://download.geonames.org/export/dump/readme.txt
 # TW cities here: https://api.opencube.tw/twzipcode
+# Populations on wiki: https://en.wikipedia.org/wiki/List_of_cities_in_Taiwan
 
-dt <- readr::read_csv("./deploy/tw_zipcode.csv")[,-1] %>%
+dt <- readr::read_csv("./data-raw/tw_zipcode.csv")[,-1] %>%
   filter(lat != 0) %>%
   select(city, lat,lng) %>%
   group_by(city) %>%
@@ -20,8 +21,33 @@ dt <- readr::read_csv("./deploy/tw_zipcode.csv")[,-1] %>%
          country="台灣") %>%
   select(country, city, lat, lng, tz) %>%
   mutate(city=paste(city, paste("lng:",round(lng,1)), paste("lat:", round(lat,1)), sep=", ")) %>%
-  select(country, city)
-  
+  select(country, city, tz)
+
+dt$population <- c(2509897, 
+                   362354, 
+                   14701, 
+                   
+                   4039946, 
+                   449963, 
+                   456116, 
+                   588906,
+                  
+                   2315727,
+                   534677,
+                   2844250,
+                   1239614,
+                   477326,
+                   263596,
+                   484892, 
+                   659841,
+                   1859776,
+                   2737608,
+                   107761,
+                   144080,
+                   795417,
+                   211550,
+                   317643)
+
 col_names <- c("geonameid",
                "name",
                "asciiname",
@@ -42,14 +68,14 @@ col_names <- c("geonameid",
                "timezone",
                "modification_date")
 
-cities1000 <- readr::read_delim("deploy/cities1000.txt", 
+cities1000 <- readr::read_delim("data-raw/cities1000.txt", 
                          delim = "\t", escape_double = FALSE, 
                          col_names = col_names, trim_ws = TRUE)
 cities1000 <- 
   cities1000 %>% 
-  dplyr::select(name, alternatenames, admin1_code, admin2_code, latitude, longitude, country_code, population)
+  dplyr::select(name, alternatenames, admin1_code, admin2_code, latitude, longitude, country_code, population, timezone)
 
-countryInfo <- readr::read_delim("deploy/countryInfo.txt", 
+countryInfo <- readr::read_delim("data-raw/countryInfo.txt", 
                                delim = "\t", escape_double = FALSE, 
                                trim_ws = TRUE, skip = 49)
 
@@ -77,8 +103,9 @@ cities1000 <-
   cities1000 %>%
   mutate(country=Country,
          city=paste(name, paste("lat:", round(latitude, 1)), paste("lng:", round(longitude,1)), sep=", ")) %>%
-  select(country, city)
+  select(country, city, tz=timezone, population)
 
 cities <- rbind(dt, cities1000)
+cities$big_city <- cities$population > 300000
 
-usethis::use_data(cities)
+usethis::use_data(cities, overwrite = TRUE)
