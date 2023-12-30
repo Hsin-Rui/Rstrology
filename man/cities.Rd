@@ -11,6 +11,9 @@ A data frame with 145,536 rows and 2 columns:
 \describe{
 \item{country}{Country name}
 \item{city}{name of city, lat: latitude, lng: longitude.}
+\item{tz}{timezone}
+\item{population}{population of the city}
+\item{big_city}{boolean, population > 300000}
 
 }
 }
