@@ -13,6 +13,7 @@ Suggests:
 Config/testthat/edition: 3
 Imports: 
     htmltools,
+    cpp11,
     lubridate,
     R6,
     rlang,
