@@ -7,7 +7,7 @@
 #' @import shinyDatetimePickers
 #' 
 
-single_chart_ui <- function(id) {
+single_chart_ui <- function(id, i18n) {
 
   ns <- NS(id)
   

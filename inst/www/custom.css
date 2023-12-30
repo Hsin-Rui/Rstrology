@@ -10,3 +10,23 @@
    background-color: #D4d8d885;
    margin-right: -6px;
 }
+
+#mainpage-language div:first-child span::before {
+  content: "繁體中文";
+}
+
+.col-sm-12 {
+  padding: 0;
+  margin: 0;
+}
+
+.col-sm-12 > form {
+  background-color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.col-sm-12 > form .shiny-options-group .radio {
+  display: inline-block;
+  padding-right: 20px;
+}

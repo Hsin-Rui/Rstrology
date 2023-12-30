@@ -4,14 +4,10 @@
 \alias{date_to_jd}
 \title{Convert a date/time into Julian Day}
 \usage{
-date_to_jd(date, hour, minute, timezone = "Asia/Taipei")
+date_to_jd(date, timezone = "Asia/Taipei")
 }
 \arguments{
 \item{date}{A string of date (ISO format) YYYY-MM-DD}
-
-\item{hour}{An integer of hour.}
-
-\item{minute}{An integer of minute}
 
 \item{timezone}{A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"}
 }

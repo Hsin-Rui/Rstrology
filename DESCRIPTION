@@ -12,9 +12,13 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
+    htmltools,
     lubridate,
+    R6,
+    rlang,
     rsconnect,
     shiny,
+    shiny.i18n,
     shinyDatetimePickers,
     shinythemes,
     swephR

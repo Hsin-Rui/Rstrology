@@ -4,10 +4,12 @@
 \alias{single_chart_ui}
 \title{UI part Shiny module: single chart}
 \usage{
-single_chart_ui(id)
+single_chart_ui(id, i18n)
 }
 \arguments{
 \item{id}{shiny module ID}
+
+\item{i18n}{a shiny.i18n::Translator object that links different languages}
 }
 \description{
 UI part Shiny module: single chart
