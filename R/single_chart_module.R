@@ -14,8 +14,8 @@ single_chart_ui <- function(id, i18n) {
   fluidPage(
     includeCSS("./inst/www/custom.css"),
     sidebarPanel(
-      HTML("<h4>Please enter data</h4>
-           <p>Click to change time<br></>"),
+      h4(i18n$t("please_enter_data")),
+      p(i18n$t("click_to_change")),
       shinyDatetimePickers::datetimePickerInput(ns("date"))
     ),
     mainPanel(
