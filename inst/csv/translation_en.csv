@@ -1,0 +1,23 @@
+ui|en
+ui_nav_page_main|Home
+
+ui_mainpage_loading|loading...
+ui_mainpage_readmefile|./inst/files/main_en.html
+
+ui_nav_page_single_chart|Single Chart
+ui_nav_page_transit|行運週期
+ui_nav_page_intro|說明
+
+app_name|Horoscope Calculator
+
+zh-tw|繁體中文
+en|English
+de|Deutsch
+
+intro_essential_dignity|先天狀態簡介
+intro_aspect|相位簡介
+intro_privacy|隱私權聲明
+
+value_1|zh
+value_2|en
+value_3|de

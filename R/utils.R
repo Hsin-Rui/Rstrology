@@ -1,28 +1,26 @@
 #' Convert a date/time into Julian Day
 #' 
 #' @param date A string of date (ISO format) YYYY-MM-DD
-#' @param hour An integer of hour.
-#' @param minute An integer of minute
 #' @param timezone A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"
+#' 
+#' @import rlang
 #' 
 #' @return An integer of Julian Day
 #' 
 
 
-date_to_jd <- function(date, hour, minute, timezone="Asia/Taipei"){
+date_to_jd <- function(date, timezone="Asia/Taipei"){
   
-  #date <- "1986-02-13"
-  #hour <- 20
-  #minute <- 30
+  if (isFALSE(is.POSIXct(date))) rlang::abort(message="input is not POSIXct")
   
-  date <- lubridate::as_datetime(date, tz=timezone)
-  lubridate::hour(date) <- hour
-  date <- lubridate::as_datetime(date, tz="UTC")
+  date <- as.character(date)
+  date <- lubridate::as_datetime(as.character(date), tz="Asia/Taipei")
   
   year <- lubridate::year(date)
   month <- lubridate::month(date)
   day <- lubridate::day(date)
   hour <- lubridate::hour(date)
+  minute <- lubridate::minute(date)
   
   hour <- hour + minute/60
   

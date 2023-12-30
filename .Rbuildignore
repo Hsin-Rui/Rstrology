@@ -5,3 +5,4 @@
 ^app.R
 ^deploy$
 ^LICENSE\.md$
+^rsconnect$

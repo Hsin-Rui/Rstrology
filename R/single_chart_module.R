@@ -1,18 +1,18 @@
 #' UI part Shiny module: single chart
 #' 
 #' @param id shiny module ID
+#' @param i18n a shiny.i18n::Translator object that links different languages
 #' 
 #' @import shiny
 #' @import shinyDatetimePickers
 #' 
 
-single_chart_ui <- function(id) {
-  requireNamespace("shiny")
+single_chart_ui <- function(id, i18n) {
 
   ns <- NS(id)
   
   fluidPage(
-    includeCSS("inst/www/custom.css"),
+    includeCSS("./inst/www/custom.css"),
     sidebarPanel(
       HTML("<h4>Please enter data</h4>
            <p>Click to change time<br></>"),
@@ -34,11 +34,10 @@ single_chart_ui <- function(id) {
 
 
 single_chart_server <- function(id){
-  requireNamespace("shiny")
   
     moduleServer(id, function(input, output, session){
     output[["date"]]  <- renderText({
-        as.character(input[["date"]])
+         as.character(input[["date"]])
       })
     })
 }
