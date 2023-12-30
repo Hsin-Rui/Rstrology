@@ -3,5 +3,4 @@
 #' @import utils
 #' 
 
-
-utils::globalVariables("cities")
+globals <- utils::globalVariables("cities")
