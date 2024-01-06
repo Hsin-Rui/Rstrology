@@ -1,3 +1,9 @@
 ^\.github$
+^Rstrology.Rproj
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^app.R
+^deploy$
+^LICENSE\.md$
+^rsconnect$
+^data-raw$

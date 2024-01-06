@@ -4,7 +4,25 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Hsin-Rui", "Lin", , "hsinrui.lin@gmail.com", role = c("aut", "cre"))
 Description: Calculate and visualize various astrological charts using Swiss Ephermeris for astrological consulting.
-License: LICENSE
+License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    htmltools,
+    cpp11,
+    lubridate,
+    R6,
+    rlang,
+    rsconnect,
+    shiny,
+    shiny.i18n,
+    shinyDatetimePickers,
+    shinythemes,
+    swephR
+Depends: 
+    R (>= 3.5.0)
+LazyData: true
