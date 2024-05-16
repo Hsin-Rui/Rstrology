@@ -30,6 +30,28 @@ single_chart_ui <- function(id, i18n) {
   )
 }
 
+#' Server part shiny: single chart (update SelectInput)
+#' 
+#' @param id Shiny module ID
+#' @param r6 R6 object to help with communication between modules (for translation etc.)
+#' 
+#' @import shiny
+#' @import gargoyle
+#' 
+
+update_select_input_server <- function(id, r6){
+  
+  moduleServer(id, function(input, output, session){
+    
+    observeEvent(gargoyle::watch("change_language"), {
+
+      r6$set_translation_language(r6$language)
+      updateSelectInput(session, "country", label = r6$t("country"), choices = r6$t(unique(cities$country)))
+      
+    })
+  })
+}
+
 #' Server part shiny: single chart
 #' 
 #' @param id Shiny module ID
@@ -39,9 +61,9 @@ single_chart_ui <- function(id, i18n) {
 #' 
 
 
-single_chart_server <- function(id){
+single_chart_server <- function(id, ...){
   
-    moduleServer(id, function(input, output, session){
+    moduleServer(id, function(input, output, session, i18n=i18n){
       
       observe({ # input city ####
         if(input$more_cities){
@@ -57,7 +79,6 @@ single_chart_server <- function(id){
                                server=T, selected=cities$city[1])
         }
       })
-      
       
     output[["date"]]  <- renderText({
          c(as.character(input[["date"]]), 

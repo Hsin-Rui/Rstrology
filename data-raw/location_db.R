@@ -18,7 +18,7 @@ dt <- readr::read_csv("./data-raw/tw_zipcode.csv")[,-1] %>%
   filter(total_diff==min_diff) %>%
   ungroup() %>%
   mutate(tz="Asia/Taipei",
-         country="台灣") %>%
+         country="Taiwan") %>%
   select(country, city, lat, lng, tz) %>%
   mutate(city=paste(city, paste("lng:",round(lng,1)), paste("lat:", round(lat,1)), sep=", ")) %>%
   select(country, city, tz)
@@ -107,5 +107,14 @@ cities1000 <-
 
 cities <- rbind(dt, cities1000)
 cities$big_city <- cities$population > 300000
+
+#country_en <- unique(cities$country)
+#country_en [1] <- "Taiwan"
+#country_en_trans <- paste(country_en, "|", country_en, sep="")
+#country_cn <- paste(country_en, unique(cities$country), sep="|")
+
+#cat(country_en_trans, file="./inst/csv/translation_en.csv", sep="\n", append = TRUE)
+#cat(country_en_trans, file="./inst/csv/translation_de.csv", sep="\n", append = TRUE)
+#cat(country_cn, file="./inst/csv/translation_zh.csv", sep="\n", append = TRUE)
 
 usethis::use_data(cities, overwrite = TRUE)
