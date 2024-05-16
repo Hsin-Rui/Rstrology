@@ -2,6 +2,7 @@
 
 export(Rstrology_app)
 import(R6)
+import(gargoyle)
 import(htmltools)
 import(lubridate)
 import(rlang)
