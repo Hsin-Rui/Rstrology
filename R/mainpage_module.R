@@ -35,15 +35,22 @@ mainpage_ui <- function(id, i18n){
 #' Server part shiny: language pick
 #' 
 #' @param id Shiny module ID
+#' @param r6 an R6 object to help with communication between modules (for translation etc.)
 #' 
 #' @return a list with selected language in reactive function
-#'
+#' 
+#' @import gargoyle
 #' 
 
-language_pick_server <- function(id){
+language_pick_server <- function(id, r6){
   
   moduleServer(id, function(input, output, session){
-
+  
+    observeEvent(input$language, {  
+      r6$language <- input$language
+      gargoyle::trigger("change_language")
+      })
+    
   return(list(
     language = reactive(input$language)
   ))
