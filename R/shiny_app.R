@@ -17,13 +17,13 @@ Rstrology_app <- function(...){
   ui <- 
     fluidPage(shiny.i18n::usei18n(i18n),
               
-      navbarPage(title = i18n$t("app_name"),
+      navbarPage(title = i18n$t("Horoscope Calculator"),
                  theme=shinytheme("flatly"), # Horoscope Calculator
                  
-                 tabPanel(i18n$t("ui_nav_page_main"), # Home 
+                 tabPanel(i18n$t("Home"), # Home 
                           mainpage_ui("mainpage", i18n)),
                  
-                 tabPanel(i18n$t("ui_nav_page_single_chart"),
+                 tabPanel(i18n$t("Single Chart"),
                           single_chart_ui("single_chart", i18n)
                  )
       )
@@ -40,6 +40,7 @@ Rstrology_app <- function(...){
     
     mainpage_server("mainpage")
     single_chart_server("single_chart")
+    
   }
   
   
