@@ -22,7 +22,8 @@ Imports:
     shiny.i18n,
     shinyDatetimePickers,
     shinythemes,
-    swephR
+    swephR,
+    gargoyle
 Depends: 
     R (>= 3.5.0)
 LazyData: true
