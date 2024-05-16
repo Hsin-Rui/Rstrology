@@ -53,3 +53,4 @@ Rstrology_app <- function(...){
 
 ## TODO. 1. cities translation in selectInput
 ## TODO. 2. calculate astrological elements
+## TODO. 3. visualize chart

@@ -8,6 +8,9 @@ An R6 Class to communicate between shiny modules
 
 An R6 Class to communicate between shiny modules
 }
+\section{Super class}{
+\code{\link[shiny.i18n:Translator]{shiny.i18n::Translator}} -> \code{DataManager}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -21,6 +24,25 @@ An R6 Class to communicate between shiny modules
 \item \href{#method-DataManager-clone}{\code{DataManager$clone()}}
 }
 }
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="at"><a href='../../shiny.i18n/html/Translator.html#method-Translator-at'><code>shiny.i18n::Translator$at()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="automatic_translate"><a href='../../shiny.i18n/html/Translator.html#method-Translator-automatic_translate'><code>shiny.i18n::Translator$automatic_translate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_key_translation"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_key_translation'><code>shiny.i18n::Translator$get_key_translation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_languages"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_languages'><code>shiny.i18n::Translator$get_languages()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_translation_language"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_translation_language'><code>shiny.i18n::Translator$get_translation_language()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_translations"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_translations'><code>shiny.i18n::Translator$get_translations()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="initialize"><a href='../../shiny.i18n/html/Translator.html#method-Translator-initialize'><code>shiny.i18n::Translator$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="parse_date"><a href='../../shiny.i18n/html/Translator.html#method-Translator-parse_date'><code>shiny.i18n::Translator$parse_date()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="parse_number"><a href='../../shiny.i18n/html/Translator.html#method-Translator-parse_number'><code>shiny.i18n::Translator$parse_number()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="set_translation_language"><a href='../../shiny.i18n/html/Translator.html#method-Translator-set_translation_language'><code>shiny.i18n::Translator$set_translation_language()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="t"><a href='../../shiny.i18n/html/Translator.html#method-Translator-t'><code>shiny.i18n::Translator$t()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="translate"><a href='../../shiny.i18n/html/Translator.html#method-Translator-translate'><code>shiny.i18n::Translator$translate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="use_js"><a href='../../shiny.i18n/html/Translator.html#method-Translator-use_js'><code>shiny.i18n::Translator$use_js()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManager-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManager-clone}{}}}

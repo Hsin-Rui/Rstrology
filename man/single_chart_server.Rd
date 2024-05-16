@@ -4,7 +4,7 @@
 \alias{single_chart_server}
 \title{Server part shiny: single chart}
 \usage{
-single_chart_server(id)
+single_chart_server(id, ...)
 }
 \arguments{
 \item{id}{Shiny module ID}
