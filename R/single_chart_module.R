@@ -61,9 +61,9 @@ update_select_input_server <- function(id, r6){
 #' 
 
 
-single_chart_server <- function(id, ...){
+single_chart_server <- function(id){
   
-    moduleServer(id, function(input, output, session, i18n=i18n){
+    moduleServer(id, function(input, output, session){
       
       observe({ # input city ####
         if(input$more_cities){
