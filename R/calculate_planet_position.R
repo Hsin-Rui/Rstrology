@@ -50,3 +50,9 @@ calculate_planet_position <- function(date, timezone, city){
   return(list(planetary_position=position ,house_cusps=house_cusps))
 
 }
+
+#' @name SE
+#' @title Swiss Ephemeris object
+#' @export
+
+SE <- swephR::SE
