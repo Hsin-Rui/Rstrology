@@ -12,7 +12,7 @@
 #' @import stringr
 #' 
 
-calculate_planet_position <- function(date, timezone, city,..){
+calculate_planet_position <- function(date, timezone, city){
 
   se_path <- (here::here("inst/files/se_data"))
   swe_set_ephe_path(se_path)

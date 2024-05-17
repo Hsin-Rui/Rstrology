@@ -7,7 +7,7 @@ planetary positions are calculated by calling swe_calc_ut()
 ASC, MC, Vertex and house cusps are calculated by calling swe_houses_ex()
 swe_calc_ut returns 6 double parameters: 1. longitude, 2. latitude, 3. distance, 4. speed in longitude, 5. speed in latitude, 6. speed in distance}
 \usage{
-calculate_planet_position(date, timezone, city, ..)
+calculate_planet_position(date, timezone, city)
 }
 \arguments{
 \item{date}{A POSIXct class date time string}
