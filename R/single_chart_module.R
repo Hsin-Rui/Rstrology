@@ -55,13 +55,14 @@ update_select_input_server <- function(id, r6){
 #' Server part shiny: single chart
 #' 
 #' @param id Shiny module ID
+#' @param r6 R6 object to help with communication between modules (for translation etc.)
 #' 
 #' @import shiny
 #' @import shinyDatetimePickers
 #' 
 
 
-single_chart_server <- function(id){
+single_chart_server <- function(id, r6){
   
     moduleServer(id, function(input, output, session){
       
@@ -69,13 +70,16 @@ single_chart_server <- function(id){
         if(input$more_cities){
           updateSelectizeInput(session,
                                "city",
-                               choices=cities$city [(cities$country %in% input$country)],
+                               choices=cities$city [(cities$country %in% 
+                                                       cities$country [which(r6$t(unique(cities$country)) %in% input$country)]
+                                                     )],
                                server=TRUE)
         }
         else{
           updateSelectizeInput(session,
                                "city",
-                               choices=cities$city [(cities$country %in% input$country) & cities$big_city %in% TRUE],
+                               choices=cities$city [(cities$country %in% 
+                                                       cities$country[which(r6$t(unique(cities$country)) %in% input$country)]) & cities$big_city %in% TRUE],
                                server=T, selected=cities$city[1])
         }
       })
