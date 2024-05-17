@@ -7,7 +7,7 @@
 date_to_jd(date, timezone = "Asia/Taipei")
 }
 \arguments{
-\item{date}{A string of date (ISO format) YYYY-MM-DD}
+\item{date}{A POSIXct class date time string}
 
 \item{timezone}{A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"}
 }

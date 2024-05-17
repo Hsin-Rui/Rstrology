@@ -4,10 +4,12 @@
 \alias{single_chart_server}
 \title{Server part shiny: single chart}
 \usage{
-single_chart_server(id)
+single_chart_server(id, r6)
 }
 \arguments{
 \item{id}{Shiny module ID}
+
+\item{r6}{R6 object to help with communication between modules (for translation etc.)}
 }
 \description{
 Server part shiny: single chart
