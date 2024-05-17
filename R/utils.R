@@ -1,6 +1,6 @@
 #' Convert a date/time into Julian Day
 #' 
-#' @param date A string of date (ISO format) YYYY-MM-DD
+#' @param date A POSIXct class date time string
 #' @param timezone A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"
 #' 
 #' @import rlang

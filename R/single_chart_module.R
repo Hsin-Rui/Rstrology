@@ -25,7 +25,8 @@ single_chart_ui <- function(id, i18n) {
       actionButton(ns("more_cities"), label=i18n$t("more_cities"))
     ),
     mainPanel(
-      textOutput(ns("date"))
+      tableOutput(ns("planet_position")),
+      tableOutput(ns("house_cusps"))
     )
   )
 }
@@ -49,6 +50,7 @@ update_select_input_server <- function(id, r6){
       updateSelectInput(session, "country", label = r6$t("country"), choices = r6$t(unique(cities$country)))
       
     })
+    
   })
 }
 
@@ -66,29 +68,43 @@ single_chart_server <- function(id, r6){
   
     moduleServer(id, function(input, output, session){
       
-      observe({ # input city ####
+      observeEvent(input$country, { # input city ####
+        
+        all_cities <- reactive({ 
+          cities$city [(cities$country %in% (unique(cities$country) [which(r6$t(unique(cities$country)) %in% input$country)]) )] 
+        })
+        
+        big_cities <- reactive({
+          cities$city [(cities$country %in% 
+                          (unique(cities$country)[which(r6$t(unique(cities$country)) %in% input$country)])) & cities$big_city %in% TRUE]
+        })
+        
         if(input$more_cities){
-          updateSelectizeInput(session,
-                               "city",
-                               choices=cities$city [(cities$country %in% 
-                                                       cities$country [which(r6$t(unique(cities$country)) %in% input$country)]
-                                                     )],
-                               server=TRUE)
+          
+          updateSelectizeInput(session, "city", choices=all_cities(), selected = all_cities()[1], server=TRUE)
         }
+        
         else{
-          updateSelectizeInput(session,
-                               "city",
-                               choices=cities$city [(cities$country %in% 
-                                                       cities$country[which(r6$t(unique(cities$country)) %in% input$country)]) & cities$big_city %in% TRUE],
-                               server=T, selected=cities$city[1])
+          
+          updateSelectizeInput(session, "city", choices=big_cities(), server=TRUE, selected=big_cities()[1])
+          
         }
       })
       
-    output[["date"]]  <- renderText({
-         c(as.character(input[["date"]]), 
-          cat(as.character(input[["city"]])),
-          as.character(input[["city"]]),
-          as.character(input[["country"]]))
+      planet_position <- reactive({calculate_planet_position(date=input$date, timezone = cities$tz [which(cities$city %in% input[["city"]] )], city = input$city)})
+      
+      
+    output[["planet_position"]]  <- renderTable({
+      
+      planet_position()$planetary_position
+      
       })
+    
+    output[["house_cusps"]]  <- renderTable({
+      
+      planet_position()$house_cusps
+      
+    })
+    
     })
 }

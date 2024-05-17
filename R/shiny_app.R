@@ -13,6 +13,7 @@ Rstrology_app <- function(...){
   i18n <- shiny.i18n::Translator$new(translation_csvs_path = "./inst/csv/",
                          separator_csv="|")
   active_ui_lang <- grep("ui",i18n$get_languages(), invert=T, value=T)
+  i18n$set_translation_language("zh")
 
   ui <- 
     fluidPage(shiny.i18n::usei18n(i18n),

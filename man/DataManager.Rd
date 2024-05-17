@@ -2,10 +2,8 @@
 % Please edit documentation in R/data_manager.R
 \name{DataManager}
 \alias{DataManager}
-\title{An R6 Class to communicate between shiny modules}
+\title{R6 Class to store & process data.}
 \description{
-An R6 Class to communicate between shiny modules
-
 An R6 Class to communicate between shiny modules
 }
 \section{Super class}{
@@ -14,7 +12,22 @@ An R6 Class to communicate between shiny modules
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{language}}{current language version}
+\item{\code{language}}{(\code{character()})\cr
+Language selected for shinyApp. Default to Chinese.}
+
+\item{\code{horoscope_datetime}}{(\code{POSIXct()})\cr
+Date & time of the horoscope. Default to current datetime.}
+
+\item{\code{horoscope_timzezone}}{(\code{character()})\cr
+Time zone. Default to Asia/Taipei}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{horoscope_timzezone}}{(\code{character()})\cr
+Time zone. Default to Asia/Taipei}
 }
 \if{html}{\out{</div>}}
 }
