@@ -28,7 +28,8 @@ Imports:
     here,
     ggplot2,
     sysfonts,
-    showtext
+    showtext,
+    tibble
 Depends: 
     R (>= 3.5.0)
 LazyData: true
