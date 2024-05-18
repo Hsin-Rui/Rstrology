@@ -27,7 +27,8 @@ Imports:
     stringr,
     here,
     ggplot2,
-    sysfonts
+    sysfonts,
+    showtext
 Depends: 
     R (>= 3.5.0)
 LazyData: true
