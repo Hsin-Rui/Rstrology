@@ -1,7 +1,16 @@
 load_fonts()
+showtext_auto()
 
-draw_chart_template()
-draw_chart_template("chris brennan")
+circle <- get_circle_coords(r=0.95, length.out=156)
+
+sign_x <- circle$x[seq(from=7, by=13, length.out=12)]
+sign_y <- circle$y[seq(from=7, by=13, length.out=12)]
+
+draw_chart_template()+
+  geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
+
+draw_chart_template("chris brennan")+
+  geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
 draw_chart_template("others")
 
 ## 3. define x, y for the asepct tables

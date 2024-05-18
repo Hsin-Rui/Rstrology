@@ -33,4 +33,11 @@ globals <- utils::globalVariables("SE")
 #' 
 globals <- utils::globalVariables("cities")
 
+#' Global variable: colors of sign
+#' 
+#' @importFrom utils globalVariables
+#' 
 
+zodiac_sign_color <- rep(c("red","darkgreen", "darkgoldenrod2", "blue"), 3)
+
+globals <- utils::globalVariables("zodiac_sign_color")
