@@ -25,7 +25,8 @@ Imports:
     swephR,
     gargoyle,
     stringr,
-    here
+    here,
+    ggplot2
 Depends: 
     R (>= 3.5.0)
 LazyData: true

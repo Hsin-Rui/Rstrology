@@ -3,7 +3,7 @@
 # database documentation: https://download.geonames.org/export/dump/readme.txt
 # TW cities here: https://api.opencube.tw/twzipcode
 # Populations on wiki: https://en.wikipedia.org/wiki/List_of_cities_in_Taiwan
-
+library(dplyr)
 dt <- readr::read_csv("./data-raw/tw_zipcode.csv")[,-1] %>%
   filter(lat != 0) %>%
   select(city, lat,lng) %>%
@@ -102,7 +102,7 @@ cities1000 <- cities1000 %>%
 cities1000 <- 
   cities1000 %>%
   mutate(country=Country,
-         city=paste(name, paste("lat:", round(latitude, 1)), paste("lng:", round(longitude,1)), sep=", ")) %>%
+         city=paste(name, paste("lng:", round(longitude, 1)), paste("lat:", round(latitude,1)), sep=", ")) %>%
   select(country, city, tz=timezone, population)
 
 cities <- rbind(dt, cities1000)

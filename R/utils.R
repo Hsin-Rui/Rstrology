@@ -3,7 +3,9 @@
 #' @param date A POSIXct class date time string
 #' @param timezone A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"
 #' 
-#' @import rlang
+#' @importFrom lubridate year month day hour minute is.POSIXct
+#' @importFrom swephR swe_date_conversion
+#' @importFrom rlang abort
 #' 
 #' @return An integer of Julian Day
 #' 
@@ -28,31 +30,5 @@ date_to_jd <- function(date, timezone="Asia/Taipei"){
   
   return(jd)
 }
-
-#' Convert current time to Julian Day
-#' 
-#' 
-#' @import lubridate
-#' @import swephR
-#' 
-#' @return Julian day (integer).
-#' 
-
-current_time_to_jd <- function(){
-  
-  current_time <- lubridate::as_datetime(Sys.time(), tz="UTC")
-  year <- as.numeric(lubridate::year(current_time))
-  month <- as.numeric(lubridate::month(current_time))
-  day <- as.numeric(lubridate::day(current_time))
-  hour <- as.numeric(lubridate::hour(current_time))
-  minute <- as.numeric(lubridate::minute(current_time))
-
-  hour <- hour + minute/60
-  jd <- swephR::swe_date_conversion(year,month,day,hour,"g")$jd
-
-  return(jd)
-  
-}
-
 
 
