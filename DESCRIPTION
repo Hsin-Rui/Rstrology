@@ -25,7 +25,10 @@ Imports:
     swephR,
     gargoyle,
     stringr,
-    here
+    here,
+    ggplot2,
+    sysfonts,
+    showtext
 Depends: 
     R (>= 3.5.0)
 LazyData: true

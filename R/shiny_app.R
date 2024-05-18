@@ -5,6 +5,7 @@
 #' @import shiny
 #' @import shinythemes
 #' @import shiny.i18n
+#' @import gargoyle
 #' @export
 #' 
 

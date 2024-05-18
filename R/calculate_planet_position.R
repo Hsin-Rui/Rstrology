@@ -7,13 +7,13 @@
 #' @param timezone A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"
 #' @param city A character string of city along with longitude and latitude (acquired in cities dataset)
 #' 
-#' @import swephR
-#' @import here
-#' @import stringr
+#' @importFrom swephR swe_set_ephe_path swe_calc_ut swe_houses_ex
+#' @importFrom here here
+#' @importFrom stringr str_extract
 #' 
 
 calculate_planet_position <- function(date, timezone, city){
-
+  
   se_path <- (here::here("inst/files/se_data"))
   swe_set_ephe_path(se_path)
   # call date_to_jd convert date to julian day
