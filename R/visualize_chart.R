@@ -68,26 +68,34 @@ draw_chart_template <- function(style="whole sign"){
     geom_path(data=inner_circle, aes(x=x, y=y), linewidth=0.3)+
     geom_path(data=inner_circle2, aes(x=x, y=y), linewidth=0.3)+
     # define the size of graph. the outer circle has x & y of -1 to 1.
-    xlim(-1.05, 1.05)+
+    xlim(-1.10, 1.10)+
     ylim(-1.05, 1.05)+
     # add custom theme (white background etc.)
     mytheme+
     # make coordinates x & y equally long
-    coord_equal()+
-    geom_segment(aes(x=sign_x, y=sign_y, xend=sign_x_end, yend=sign_y_end), color="black", linewidth=0.3)
+    coord_equal()
   
-  if(style=="others") return(p_common)
-  
-  ## 10. draw template for whole sign house chart
-  
-  p_common_whole_sign <-
+  ## 7. draw whole sign chart template
+  p_whole_sign <-
     p_common +
+    geom_segment(aes(x=sign_x, y=sign_y, xend=sign_x_end, yend=sign_y_end), color="black", linewidth=0.3) +
     # house division
     geom_segment(aes(x=cusps_x, y=cusps_y, xend=sign_x_end, yend=sign_y_end), color="grey50", linewidth=0.2) +
     # house number
     geom_text(aes(x=house_x, y=house_y, label=c(7:12, 1:6)), size=3.5)
   
-  if(style=="whole sign") return(p_common_whole_sign)
+  if(style=="whole sign") return(p_whole_sign)
+  
+  ## 8. draw template for whole sign house chart
+  sign_x
+  
+  p_quadrant <-
+    p_common+
+      geom_segment(aes(x=cusps_x[c(1,7)], y=cusps_y[c(1,7)], xend=c(1.08, -1.08), yend=sign_y[c(1,7)]), 
+                   color="black", linewidth=0.4, 
+                   arrow = arrow(length = unit(0.15, "inches")))
+
+  if(style=="others") return(p_quadrant)
   
 }
 

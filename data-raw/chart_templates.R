@@ -1,3 +1,5 @@
+load_fonts()
+
 draw_chart_template()
 draw_chart_template("chris brennan")
 draw_chart_template("others")
