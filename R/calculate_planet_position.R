@@ -51,8 +51,3 @@ calculate_planet_position <- function(date, timezone, city){
 
 }
 
-#' @name SE
-#' @title Swiss Ephemeris object
-#' @export
-
-SE <- swephR::SE
