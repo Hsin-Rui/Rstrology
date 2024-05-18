@@ -1,7 +1,6 @@
-#' define global variables
+#' Global variable: a vector of characters representing 12 zodiac signs
 #' 
-#' @import utils
-#' @import swephR
+#' @importFrom utils globalVariables
 #' 
 
 zodiac_sign <- c("a", #aries
@@ -16,8 +15,22 @@ zodiac_sign <- c("a", #aries
                  "z", #capricorn
                  "x", #aquarius
                  "c") #pisces
-SE <- swephR::SE
 
-globals <- utils::globalVariables("cities")
 globals <- utils::globalVariables("zodiac_sign")
+
+#' Global variable: a list of Swiss Ephemeris objects
+#' 
+#' @importFrom utils globalVariables
+#' @import swephR
+#' 
+
+SE <- swephR::SE
 globals <- utils::globalVariables("SE")
+
+#' Define global variable: dataset cities
+#' 
+#' @importFrom utils globalVariables
+#' 
+globals <- utils::globalVariables("cities")
+
+
