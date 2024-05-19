@@ -115,7 +115,7 @@ load_fonts <- function(){
 #' Calculate x and y of a circle
 #' 
 #' @param r rate of the circle
-#' @parem ... all other argumebts
+#' @param ... all other argumebts
 #' 
 #' @importFrom tibble tibble
 #' @import magrittr
@@ -125,4 +125,12 @@ get_circle_coords <- function(r = 1, ...) {
   tibble::tibble(theta = seq(0, 2 * pi, ...),
                  x     = cos(theta) * r,
                  y     = sin(theta) * r)
+}
+
+#' Visualize chart in whole sign stype
+#' 
+#' 
+
+draw_whole_sign_chart <- function(){
+  
 }

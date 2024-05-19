@@ -8,6 +8,8 @@ get_circle_coords(r = 1, ...)
 }
 \arguments{
 \item{r}{rate of the circle}
+
+\item{...}{all other argumebts}
 }
 \description{
 Calculate x and y of a circle
