@@ -7,9 +7,9 @@
 optmize_planet_position(planet_theta, selected_elements)
 }
 \arguments{
-\item{selected_elements}{all planets selected for chart}
+\item{planet_theta}{a numeric vector}
 
-\item{planet_thetat}{a numeric vector}
+\item{selected_elements}{all planets selected for chart}
 }
 \description{
 Optimize until all planets are not overlapping

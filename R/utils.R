@@ -178,7 +178,7 @@ examine_distance <- function(theta, criteria=500){
 
 #' Optimize until all planets are not overlapping
 #' 
-#' @param planet_thetat a numeric vector
+#' @param planet_theta a numeric vector
 #' @param selected_elements all planets selected for chart
 #'
 
