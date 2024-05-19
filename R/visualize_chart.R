@@ -133,4 +133,69 @@ get_circle_coords <- function(r = 1, ...) {
 
 draw_whole_sign_chart <- function(){
   
+  load_fonts()
+  showtext_auto()
+  
+  p <- readRDS(here::here("./inst/ggplot_objects/p_empty_whole_sign.rds"))
+  
+  planet_position <- position$planetary_position
+  planet_position <- planet_position[!(row.names(planet_position) %in% "true_node"), ]
+  selected_elements <- row.names(planet_position)
+  
+  # 1. put on zodiac sign 
+  ## determine sign order
+  
+  asc_sign <- find_sign(planet_position$deg [selected_elements %in% "asc"])
+  sign_order <- define_sign_order(asc_sign)
+  
+  ## get coordinates of x and x
+  
+  circle <- get_circle_coords(r=0.95, length.out=156)
+   
+  sign_x <- circle$x[seq(from=7, by=13, length.out=12)] ## the seventh value is near by x = -1
+  sign_y <- circle$y[seq(from=7, by=13, length.out=12)]
+  
+  sign_x <- sign_x [define_sign_order(7)]
+  sign_y <- sign_y [define_sign_order(7)]
+  
+  p <- 
+    p +
+    geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign[sign_order]), family="HamburgSymbols", size=6, color=zodiac_sign_color[sign_order])
+  
+  ## 2. put on planets etc.
+  
+  ## let the seventh house (x=1) be the starting point
+  starting_sign <- find_opposite_sign(asc_sign)
+  starting_deg <- (starting_sign - 1)*30
+  
+  coords_planet_points <- get_circle_coords(r=0.9, length.out=36000)
+  coords_planet_glyphs <- get_circle_coords(r=0.82, length.out=36000)
+  coords_lines <- get_circle_coords(r=0.87, length.out=36000)
+  
+  ## x and y of geom_point for exact planetary position (r = 0.9)
+  planet_on_circle <- as.vector(planet_position$deg - starting_deg) # re-scaling
+  planet_on_circle [planet_on_circle < 0] <- planet_on_circle [planet_on_circle < 0] + 360 # position (on the circle) of planets
+
+  planet_theta <- as.integer(planet_on_circle /360 *36000) + 1
+  planet_x_on_circle <- coords_planet_points$x [planet_theta]
+  planet_y_on_circle <- coords_planet_points$y [planet_theta]
+  
+  ## determine the position of planet glyphs
+
+  new_theta <- adjust_planet_theta(planet_theta) # use my own algorithm to optimize position of planet glyphs
+
+  planet_x_glyphs <- coords_planet_glyphs$x [new_theta] 
+  planet_y_glyphs <- coords_planet_glyphs$y [new_theta]
+  
+  lines_end_x <- coords_lines$x [new_theta] 
+  lines_end_y <- coords_lines$y [new_theta] 
+  
+  p +
+    ## put on zodiac signs
+    geom_point(aes(x=planet_x_on_circle, y=planet_y_on_circle), color=planet_position$planet_color)+
+    ## put on planetary glyphs
+    geom_text(aes(x=planet_x_glyphs, y=planet_y_glyphs, label=planet_position$planet_glyphs), family=planet_position$font_gpyphs, size=planet_position$font_size)+
+    ## draw lines to clearly indicate planetary position
+    geom_segment(aes(x=planet_x_on_circle, xend=lines_end_x, y=planet_y_on_circle, yend=lines_end_y), color="grey65")
+  
 }
