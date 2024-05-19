@@ -134,6 +134,10 @@ get_circle_coords <- function(r = 1, ...) {
 
 draw_whole_sign_chart <- function(planet_position){
   
+  #dat <-calculate_planet_position(as.POSIXct("2024-04-16 01:16:55", tz="Asia/Taipei"), city=cities$city[1])
+  #planet_position <- dat$planetary_position
+  #planet_position <- planet_position[!row.names(planet_position) %in% "true_node", ]
+  
   load_fonts()
   showtext_auto()
   
@@ -229,5 +233,5 @@ draw_whole_sign_chart <- function(planet_position){
     geom_text(aes(x=deg_x, y=deg_y, label=deg), size=3.1, color=degree_color) +
     geom_text(aes(x=min_x, y=min_y, label=minute), size=2.9, color=degree_color) +
     geom_text(aes(x=retrograde_x, y=retrograde_y, label="R"), size=2.4, color="darkred")
-  
+ 
 }
