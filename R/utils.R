@@ -31,4 +31,21 @@ date_to_jd <- function(date, timezone="Asia/Taipei"){
   return(jd)
 }
 
+#' A simple function to determine sign order
+#' 
+#' @param start_from an integer between 1 to twelve
+#' @return a sequence of 12 numbers
+#' 
 
+define_sign_order <- function(start_from=1){
+  
+  start_from <- as.integer(start_from)
+  
+  if(start_from > 12 | start_from < 1) rlang::abort("Values out of range. Input has to be 1 to 12.")
+  if(start_from==1) return(1:12)
+  if(start_from >1){
+    sign_order <- start_from:length(zodiac_sign)
+    c(sign_order, 1:(12-length(sign_order)))
+  }
+  
+}

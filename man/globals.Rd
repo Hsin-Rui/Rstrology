@@ -3,14 +3,14 @@
 \docType{data}
 \name{globals}
 \alias{globals}
-\title{define global variables}
+\title{Define global variable: dataset cities}
 \format{
-An object of class \code{character} of length 1.
+An object of class \code{character} of length 4.
 }
 \usage{
 globals
 }
 \description{
-define global variables
+Define global variable: dataset cities
 }
 \keyword{datasets}
