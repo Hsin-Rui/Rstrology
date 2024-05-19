@@ -10,6 +10,7 @@
 #' @importFrom swephR swe_set_ephe_path swe_calc_ut swe_houses_ex
 #' @importFrom here here
 #' @importFrom stringr str_extract
+#' @importFrom dplyr case_when
 #' 
 
 calculate_planet_position <- function(date, timezone, city){
@@ -47,7 +48,21 @@ calculate_planet_position <- function(date, timezone, city){
   house_cusps <- data.frame(sapply(systems, calculate_house_cusps))
   names(house_cusps) <- c("whole_sign", "equal", "placidus", "koch")
   
-  return(list(planetary_position=position ,house_cusps=house_cusps))
+  # find sign and put on information for chart visualization
+  position <- t(position)
+  position <- data.frame(deg=position[,1], speed=position[,2])
 
+  position$sign <- sapply(as.list(position$deg), find_sign) # find sign for each element
+  position$deg_in_sign <- as.integer(position$deg - (position$sign-1)*30)
+  position$min_in_sign <- as.integer(((position$deg - (position$sign-1)*30) - position$deg_in_sign)*60)
+  position$sec_in_sign <- as.integer((((position$deg - (position$sign-1)*30) - position$deg_in_sign)*60 - position$min_in_sign)*60)
+
+  position$planet_glyphs <- convert_planet_symbol(row.names(position))
+  position$planet_color <- zodiac_sign_color[position$sign]
+  
+  position$font_gpyphs <-  dplyr::case_when(position$planet_glyphs == "Vx" ~ "sans", TRUE ~ "AstroDotBasic")
+  position$font_size <- dplyr::case_when(position$planet_glyphs == "Vx" ~ 4.5, TRUE ~ 6.5)
+  
+  return(list(planetary_position=position ,house_cusps=house_cusps))
 }
 
