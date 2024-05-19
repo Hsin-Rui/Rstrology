@@ -29,7 +29,8 @@ Imports:
     ggplot2,
     sysfonts,
     showtext,
-    tibble
+    tibble,
+    magrittr
 Depends: 
     R (>= 3.5.0)
 LazyData: true
