@@ -134,9 +134,6 @@ get_circle_coords <- function(r = 1, ...) {
 
 draw_whole_sign_chart <- function(planet_position){
   
-  planet_position <- calculate_planet_position(as.POSIXct("2024-02-08 09:45:02", tz="Asia/Taipei"), city = cities$city[1])
-  planet_position <- planet_position$planetary_position
-  
   load_fonts()
   showtext_auto()
   
