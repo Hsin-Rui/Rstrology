@@ -200,6 +200,9 @@ optmize_planet_position <- function(planet_theta, selected_elements){
   names(new_theta) <- selected_elements [original_order]
   names(new_theta) <- convert_planet_symbol(names(new_theta))
   
+  if(TRUE %in% (new_theta < 0)) new_theta [new_theta < 0] <- new_theta [new_theta < 0] + 36000
+  if(TRUE %in% (new_theta > 36000)) new_theta [new_theta > 36000] <- new_theta [new_theta > 36000] - 36000
+  
   return(new_theta)
   
 }
