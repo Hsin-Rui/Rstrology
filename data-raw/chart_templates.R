@@ -1,17 +1,25 @@
-load_fonts()
-showtext_auto()
-
-circle <- get_circle_coords(r=0.95, length.out=156)
-
-sign_x <- circle$x[seq(from=7, by=13, length.out=12)]
-sign_y <- circle$y[seq(from=7, by=13, length.out=12)]
-
-draw_chart_template()+
-  geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
-
-draw_chart_template("chris brennan")+
-  geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
-draw_chart_template("others")
+# load_fonts()
+# showtext_auto()
+# 
+# circle <- get_circle_coords(r=0.95, length.out=156)
+# 
+# sign_x <- circle$x[seq(from=7, by=13, length.out=12)]
+# sign_y <- circle$y[seq(from=7, by=13, length.out=12)]
+# 
+# p_empty_whole_sign <- draw_chart_template()
+# saveRDS(p_empty_whole_sign, "./inst/ggplot_objects/p_empty_whole_sign.rds")
+#   
+# # geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
+# 
+# p_empty_brennan <- draw_chart_template("chris brennan")
+# saveRDS(p_empty_brennan, "./inst/ggplot_objects/p_empty_brennan.rds")
+# 
+# p_empty_quadrant <- draw_chart_template("others")
+# saveRDS(p_empty_quadrant, "./inst/ggplot_objects/p_empty_quadrant.rds")
+# 
+# geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
+# 
+# draw_chart_template("others")
 
 ## 3. define x, y for the asepct tables
 left_end <- -0.2
