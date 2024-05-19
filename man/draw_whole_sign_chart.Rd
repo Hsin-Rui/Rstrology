@@ -4,7 +4,10 @@
 \alias{draw_whole_sign_chart}
 \title{Visualize chart in whole sign stype}
 \usage{
-draw_whole_sign_chart()
+draw_whole_sign_chart(planet_position)
+}
+\arguments{
+\item{planet_position}{a data frame (obtained by calculate_planet_position)}
 }
 \description{
 Visualize chart in whole sign stype

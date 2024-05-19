@@ -117,39 +117,89 @@ convert_planet_symbol <- function(x){
 
 #' Optimize distance of chart objects
 #'
-#' @param planet_theta a numeric vector of theta value (to determine x and y of the circle)
+#' @param theta a numeric vector of theta value (to determine x and y of the circle)
 #' @param adjust_distance a numeric value. The threshold for the absolute distance of theta to decide for which elements a new theta value should be given
 #' @param steps how far should the element be moved away each time the iteration is done. 
-#' @param selected_elements all planets in the chart (character vector)
 #' 
 #' @importFrom dplyr between
 #' @return a numeric vector of theta
 #' 
 
-adjust_planet_theta <- function(planet_theta, selected_elements=selected_elements, adjust_distance=600, steps=50) {
+adjust_planet_theta <- function(theta, adjust_distance=500, steps=125) {
   
-  distance_to_asc <- abs(planet_theta [selected_elements %in% "asc"] - planet_theta)
-  adjusting_order <- order(distance_to_asc)
-  
-  for (i in adjusting_order) {
+  for (i in 1:length(theta)) {
     
-    distance <- planet_theta[i] - planet_theta[1:length(planet_theta)]
+    distance <- theta[i] - theta
     distance [distance==0] <- Inf
-    nees_adjustment <-  dplyr::between(abs(distance), rep(0, length(distance)), rep(adjust_distance, length(distance)))
+    needs_adjustment <-  dplyr::between(abs(distance), rep(0, length(distance)), rep(adjust_distance, length(distance)))
+    should_continue <- TRUE %in% needs_adjustment
     
-    while(TRUE %in% nees_adjustment) {
+    while(should_continue) {
       
-      planet_theta  [nees_adjustment & distance > 0] <- planet_theta  [nees_adjustment & distance > 0] - steps # planets on the left move to left
-      planet_theta  [nees_adjustment & distance < 0] <- planet_theta  [nees_adjustment & distance < 0] + steps # planets on the right move to right
+      theta  [needs_adjustment & distance > 0] <- theta  [needs_adjustment & distance > 0] - steps # planets on the left move to left
+      theta  [needs_adjustment & distance < 0] <- theta  [needs_adjustment & distance < 0] + steps # planets on the right move to right
       
-      distance <- planet_theta[i] - planet_theta[1:length(planet_theta)]
+      distance <- theta[i] - theta
       distance [distance==0] <- Inf
-      nees_adjustment <-  dplyr::between(abs(distance), rep(0, length(distance)), rep(adjust_distance, length(distance)))
+      needs_adjustment <-  dplyr::between(abs(distance), rep(0, length(distance)), rep(adjust_distance, length(distance)))
+      should_continue <- TRUE %in% needs_adjustment
       
     }
     
   }
   
-  return(planet_theta)
+  return(theta)
+  
+}
+
+#' Examine whether elements are overlapping with each other
+#' 
+#' @param theta a numeric vector of theta
+#' @param criteria targeted distance
+#' 
+#' @return a signle logical value (TRUE = still needs revision)
+#' 
+
+examine_distance <- function(theta, criteria=500){
+  
+  res <- rep(NA, length(theta))
+  
+  for (i in 1:length(theta)) {
+    
+    distance <- theta[1]-theta
+    distance [distance==0] <- Inf
+    res[i] <- TRUE %in% (abs(distance) < criteria)
+      
+  }
+  
+  return(TRUE %in% res)
+  
+}
+
+#' Optimize until all planets are not overlapping
+#' 
+#' @param planet_thetat a numeric vector
+#' @param selected_elements all planets selected for chart
+#'
+
+optmize_planet_position <- function(planet_theta, selected_elements){
+  
+  original_order <- order(planet_theta)
+  
+  new_theta <- adjust_planet_theta(planet_theta)
+  should_continue <- examine_distance(new_theta)
+  
+  while(should_continue) {
+    
+    new_theta <- adjust_planet_theta(new_theta)
+    should_continue <- examine_distance(new_theta)
+    
+  }
+  
+  new_theta <- new_theta [order(new_theta)]
+  names(new_theta) <- selected_elements [original_order]
+  names(new_theta) <- convert_planet_symbol(names(new_theta))
+  
+  return(new_theta)
   
 }

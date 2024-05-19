@@ -4,10 +4,10 @@
 \alias{adjust_planet_theta}
 \title{Optimize distance of chart objects}
 \usage{
-adjust_planet_theta(planet_theta, adjust_distance = 600, steps = 50)
+adjust_planet_theta(theta, adjust_distance = 500, steps = 125)
 }
 \arguments{
-\item{planet_theta}{a numeric vector of theta value (to determine x and y of the circle)}
+\item{theta}{a numeric vector of theta value (to determine x and y of the circle)}
 
 \item{adjust_distance}{a numeric value. The threshold for the absolute distance of theta to decide for which elements a new theta value should be given}
 

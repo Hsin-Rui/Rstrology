@@ -26,8 +26,7 @@ single_chart_ui <- function(id, i18n) {
       actionButton(ns("draw"), label="Show chart")
     ),
     mainPanel(
-      tableOutput(ns("planet_position")),
-      tableOutput(ns("house_cusps"))
+      plotOutput(ns("chart"), width="100%", height="600px")
     )
   )
 }
@@ -95,18 +94,13 @@ single_chart_server <- function(id, r6){
       planet_position <- reactive({calculate_planet_position(date=input$date, timezone = timezone(), city = input$city)}) %>%
         bindEvent(input$draw)
       
+    output[["chart"]] <- renderPlot({
       
-    output[["planet_position"]]  <- renderTable({
+      data <- planet_position()$planetary_position
+      data <- data[!(row.names(data) %in% "true_node"),]
+      draw_whole_sign_chart(data)
       
-      planet_position()$planetary_position
-      
-      })
-    
-    output[["house_cusps"]]  <- renderTable({
-      
-      planet_position()$house_cusps
-      
-    })
+    }, width=800, height=600, res=72)
     
     })
 }
