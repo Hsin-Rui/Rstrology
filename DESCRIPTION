@@ -30,7 +30,8 @@ Imports:
     sysfonts,
     showtext,
     tibble,
-    magrittr
+    magrittr,
+    dplyr
 Depends: 
     R (>= 3.5.0)
 LazyData: true
