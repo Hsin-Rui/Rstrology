@@ -47,8 +47,8 @@ draw_chart_template <- function(style="whole sign"){
   
   p_chris_prennan <- 
     ggplot()+
-      geom_path(data=outer_circle, aes(x=x,y=y), linewidth=0.3)+
-      geom_path(data=outer_circle2, aes(x=x, y=y), linewidth=0.3)+
+      geom_path(aes(x=outer_circle$x,y=outer_circle$y), linewidth=0.3)+
+      geom_path(aes(x=outer_circle2$x, y=outer_circle2$y), linewidth=0.3)+
       mytheme+
       coord_equal()+
       geom_segment(aes(x=sign_x, y=sign_y, xend=0, yend=0), color="black", linewidth=0.3)+
@@ -63,10 +63,10 @@ draw_chart_template <- function(style="whole sign"){
   p_common <-  
     ggplot()+
     # draw four circles
-    geom_path(data=outer_circle, aes(x=x,y=y), linewidth=0.3)+
-    geom_path(data=outer_circle2, aes(x=x, y=y), linewidth=0.3)+
-    geom_path(data=inner_circle, aes(x=x, y=y), linewidth=0.3)+
-    geom_path(data=inner_circle2, aes(x=x, y=y), linewidth=0.3)+
+    geom_path(aes(x=outer_circle$x,y=outer_circle$y), linewidth=0.3)+
+    geom_path(aes(x=outer_circle2$x, y=outer_circle2$y), linewidth=0.3)+
+    geom_path(aes(x=inner_circle$x, y=inner_circle$y), linewidth=0.3)+
+    geom_path(aes(x=inner_circle2$x, y=inner_circle2$y), linewidth=0.3)+
     # define the size of graph. the outer circle has x & y of -1 to 1.
     xlim(-1.10, 1.10)+
     ylim(-1.05, 1.05)+
@@ -118,6 +118,7 @@ load_fonts <- function(){
 #' @parem ... all other argumebts
 #' 
 #' @importFrom tibble tibble
+#' @import magrittr
 #' 
 
 get_circle_coords <- function(r = 1, ...) {
