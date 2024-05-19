@@ -29,7 +29,8 @@ single_chart_ui <- function(id, i18n) {
       actionButton(ns("draw"), label=i18n$t("show_chart"))
     ),
     mainPanel(
-      plotOutput(ns("chart"), width="100%", height="600px")
+      plotOutput(ns("chart"), width="100%", height="600px"),
+      textOutput(ns("Datetime"))
     )
   )
 }
@@ -104,6 +105,12 @@ single_chart_server <- function(id, r6){
       draw_whole_sign_chart(data)
       
     }, width=800, height=600, res=72)
+    
+    output[["Datetime"]] <- renderText({
+      
+      as.character(input$date)
+      
+    })
     
     })
 }

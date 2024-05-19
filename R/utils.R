@@ -125,7 +125,7 @@ convert_planet_symbol <- function(x){
 #' @return a numeric vector of theta
 #' 
 
-adjust_planet_theta <- function(theta, adjust_distance=500, steps=125) {
+adjust_planet_theta <- function(theta, adjust_distance=500, steps=90) {
   
   for (i in 1:length(theta)) {
     
@@ -166,7 +166,7 @@ examine_distance <- function(theta, criteria=500){
   
   for (i in 1:length(theta)) {
     
-    distance <- theta[1]-theta
+    distance <- theta[i]-theta
     distance [distance==0] <- Inf
     res[i] <- TRUE %in% (abs(distance) < criteria)
       
@@ -189,9 +189,18 @@ optmize_planet_position <- function(planet_theta, selected_elements){
   new_theta <- adjust_planet_theta(planet_theta)
   should_continue <- examine_distance(new_theta)
   
-  while(should_continue) {
+  m <- 0
+  while(should_continue & m < 4) {
     
     new_theta <- adjust_planet_theta(new_theta)
+    should_continue <- examine_distance(new_theta)
+    
+    m <- m + 1
+  }
+  
+  while(should_continue) {
+    
+    new_theta <- adjust_planet_theta(new_theta, steps = 130)
     should_continue <- examine_distance(new_theta)
     
   }
