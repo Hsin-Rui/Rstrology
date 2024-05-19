@@ -17,13 +17,16 @@ single_chart_ui <- function(id, i18n) {
     includeCSS("./inst/www/custom.css"),
     sidebarPanel(
       h4(i18n$t("please_enter_data")),
-      p(i18n$t("click_to_change")),
-      shinyDatetimePickers::datetimePickerInput(ns("date")),
       br(),
       selectizeInput(ns("country"), label=i18n$t("country"), choices=countries, selected=countries[1], multiple=FALSE),
       selectizeInput(ns("city"), label=i18n$t("city"), choices=cities$city[1], selected=cities$city[1], multiple=FALSE),
       actionButton(ns("more_cities"), label=i18n$t("more_cities")),
-      actionButton(ns("draw"), label="Show chart")
+      br(),
+      br(),
+      br(),
+      p(i18n$t("click_to_change")),
+      shinyDatetimePickers::datetimePickerInput(ns("date")),
+      actionButton(ns("draw"), label=i18n$t("show_chart"))
     ),
     mainPanel(
       plotOutput(ns("chart"), width="100%", height="600px")
@@ -92,7 +95,7 @@ single_chart_server <- function(id, r6){
       
       timezone <- reactive({ cities$tz [which(cities$city %in% input[["city"]] )] })
       planet_position <- reactive({calculate_planet_position(date=input$date, timezone = timezone(), city = input$city)}) %>%
-        bindEvent(input$draw)
+        bindEvent(input$draw, ignoreNULL=FALSE)
       
     output[["chart"]] <- renderPlot({
       
