@@ -35,9 +35,8 @@ Imports:
     usethis,
     readr,
     BH,
-    ggplot2,
+    ggplot2 (>= 3.5.1),
     progress
 Depends: 
-    R (>= 3.5.0),
-    ggplot2 (>= 3.4.4)
+    R (>= 3.5.0)
 LazyData: true
