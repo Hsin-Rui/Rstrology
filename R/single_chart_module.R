@@ -32,19 +32,14 @@ single_chart_ui <- function(id, i18n) {
     ),
     mainPanel(
       
-      
-      fluidRow(
-        column(width = 2,
-               actionButton(ns("minus"), label="-")),
-        column(width = 4, 
-               selectizeInput(ns("value"), label="", choices=1:30, selected=1, multiple=FALSE)),
-        column(width = 4, 
-               selectizeInput(ns("unit"), label="",choices=c("Min","Hrs","Day","Mon","Yrs"), selected="Day", multiple=FALSE)),
-        column(width = 2,
-               actionButton(ns("add"), label="+"))
+      div(id="modify_time",
+        actionButton(ns("minus"), label="<<"),
+        selectizeInput(ns("value"), label="", choices=1:30, selected=1, multiple=FALSE),
+        selectizeInput(ns("unit"), label="",choices=c("Min","Hrs","Day","Mon","Yrs"), selected="Day", multiple=FALSE),
+        actionButton(ns("add"), label=">>")
       ),
       
-      plotOutput(ns("chart"), width="100%", height="600px"),
+      plotOutput(ns("chart"), width="100%", height="auto"),
       textOutput(ns("Datetime"))
     )
   )
@@ -137,7 +132,7 @@ single_chart_server <- function(id, r6){
         data <- planet_position()$planetary_position
         data <- data[!(row.names(data) %in% "true_node"),]
         
-        jpeg(outfile, width=800,height=600, pointsize = 24,res=96,bg="white")
+        jpeg(outfile, width=600,height=600, pointsize = 24,res=96,bg="white")
         print(draw_whole_sign_chart(data))
         dev.off()
         
