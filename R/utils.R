@@ -215,3 +215,57 @@ optmize_planet_position <- function(planet_theta, selected_elements){
   return(new_theta)
   
 }
+
+#' Given start time, unit, and value, generate a new date time string
+#'
+#' @param unit unit (Days, Hrs, Min, Mon, Yrs)
+#' @param start_time POXIXct class date time
+#' @param value a numeric value (1-30)
+#' @importFrom lubridate days hours minutes years
+#' 
+
+
+add_datetime <- function(start_time, unit, value){
+  
+  if (unit=="Day") {
+    new_time <- start_time + lubridate::days(value)
+    } else if (unit=="Hrs") {
+    new_time <- start_time + lubridate::hours(value)
+    } else if (unit=="Min") {
+    new_time <- start_time + lubridate::minutes(value)
+    } else if (unit=="Mon") {
+    new_time <- start_time + months(1)
+    } else {
+    new_time <- start_time + lubridate::years(1)
+  }
+  
+  return(new_time)
+  
+}
+
+#' Given start time, unit, and value, generate a new date time string
+#'
+#' @param unit unit (Days, Hrs, Min, Mon, Yrs)
+#' @param start_time POXIXct class date time
+#' @param value a numeric value (1-30)
+#' @importFrom lubridate days hours minutes years
+#' 
+
+minus_datetime <- function(start_time, unit, value){
+  
+  if (unit=="Day") {
+    new_time <- start_time - lubridate::days(value)
+  } else if (unit=="Hrs") {
+    new_time <- start_time - lubridate::hours(value)
+  } else if (unit=="Min") {
+    new_time <- start_time - lubridate::minutes(value)
+  } else if (unit=="Mon") {
+    new_time <- start_time - months(1)
+  } else {
+    new_time <- start_time - lubridate::years(1)
+  }
+  
+  return(new_time)
+  
+}
+
