@@ -6,7 +6,7 @@
 # sign_x <- circle$x[seq(from=7, by=13, length.out=12)]
 # sign_y <- circle$y[seq(from=7, by=13, length.out=12)]
 # 
-# p_empty_whole_sign <- draw_chart_template()
+## p_empty_whole_sign <- draw_chart_template()
 # saveRDS(p_empty_whole_sign, "./inst/ggplot_objects/p_empty_whole_sign.rds")
 #   
 # # geom_text(aes(x=sign_x, y=sign_y, label=zodiac_sign), family="HamburgSymbols", size=6, color=zodiac_sign_color)
