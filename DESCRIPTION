@@ -34,7 +34,9 @@ Imports:
     dplyr,
     shinyWidgets,
     usethis,
-    readr
+    readr,
+    BH,
+    progress
 Depends: 
     R (>= 3.5.0)
 LazyData: true
