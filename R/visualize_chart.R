@@ -134,9 +134,9 @@ get_circle_coords <- function(r = 1, ...) {
 
 draw_whole_sign_chart <- function(planet_position){
   
-  #dat <-calculate_planet_position(as.POSIXct("2024-05-24 04:33:00", tz="Asia/Taipei"), city=cities$city[1])
-  #planet_position <- dat$planetary_position
-  #planet_position <- planet_position[!row.names(planet_position) %in% "true_node", ]
+  # dat <-calculate_planet_position(as.POSIXct("1990-12-19 08:05:00", tz="Asia/Taipei"), city=cities$city[1])
+  # planet_position <- dat$planetary_position
+  # planet_position <- planet_position[!row.names(planet_position) %in% "true_node", ]
   
   load_fonts()
   showtext_auto()
@@ -184,7 +184,7 @@ draw_whole_sign_chart <- function(planet_position){
   
   ## determine the position of planet glyphs
   
-  new_theta <- optmize_planet_position(planet_theta, selected_elements = selected_elements)
+  new_theta <- optmize_planet_position(planet_theta, planets = selected_elements)
   
   planet_x_glyphs <- coords_planet_glyphs$x [new_theta] 
   planet_y_glyphs <- coords_planet_glyphs$y [new_theta]
