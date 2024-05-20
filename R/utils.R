@@ -395,7 +395,7 @@ rescale_planet_theta <- function(x){
 #' @param theta original theta vector
 #' @param new_theta manipulated theta vector
 #' 
-#' @importFrom dplyr between, case_when
+#' @importFrom dplyr between case_when
 #' 
 
 reorder_west_planets <- function(theta, new_theta){
