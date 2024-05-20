@@ -26,7 +26,6 @@ Imports:
     gargoyle,
     stringr,
     here,
-    ggplot2 (>= 3.4.4),
     sysfonts,
     showtext,
     tibble,
@@ -36,7 +35,9 @@ Imports:
     usethis,
     readr,
     BH,
+    ggplot2,
     progress
 Depends: 
-    R (>= 3.5.0)
+    R (>= 3.5.0),
+    ggplot2 (>= 3.4.4)
 LazyData: true
