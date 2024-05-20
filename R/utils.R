@@ -198,10 +198,23 @@ optmize_planet_position <- function(planet_theta, selected_elements){
     m <- m + 1
   }
   
-  while(should_continue) {
+  m <- 0
+  while(should_continue  & m < 4) {
     
     new_theta <- adjust_planet_theta(new_theta, steps = 130)
     should_continue <- examine_distance(new_theta)
+    
+    m <- m + 1
+    
+  }
+  
+  m <- 0
+  while(should_continue  & m < 4) {
+    
+    new_theta <- adjust_planet_theta(new_theta, steps = 150)
+    should_continue <- examine_distance(new_theta)
+    
+    m <- m + 1
     
   }
   

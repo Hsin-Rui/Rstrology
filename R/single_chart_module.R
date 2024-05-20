@@ -130,13 +130,20 @@ single_chart_server <- function(id, r6){
       )
 
       
-      output[["chart"]] <- renderPlot({
+      output[["chart"]] <- renderImage({
+        
+        outfile <- tempfile(fileext=".jpg")
       
         data <- planet_position()$planetary_position
         data <- data[!(row.names(data) %in% "true_node"),]
-        draw_whole_sign_chart(data)
+        
+        jpeg(outfile, width=800,height=600, pointsize = 24,res=96,bg="white")
+        print(draw_whole_sign_chart(data))
+        dev.off()
+        
+        list(src=outfile)
       
-      }, width=800, height=600, res=72)
+      }, deleteFile = T)
     
       output[["Datetime"]] <- renderText({
       
