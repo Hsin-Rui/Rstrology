@@ -37,7 +37,7 @@ single_chart_ui <- function(id, i18n) {
         column(width = 2,
                actionButton(ns("minus"), label="-")),
         column(width = 4, 
-               selectizeInput(ns("number"), label="", choices=1:30, selected=1, multiple=FALSE)),
+               selectizeInput(ns("value"), label="", choices=1:30, selected=1, multiple=FALSE)),
         column(width = 4, 
                selectizeInput(ns("unit"), label="",choices=c("Min","Hrs","Day","Mon","Yrs"), selected="Day", multiple=FALSE)),
         column(width = 2,
@@ -79,7 +79,7 @@ update_select_input_server <- function(id, r6){
 #' @param r6 R6 object to help with communication between modules (for translation etc.)
 #' 
 #' @import shiny
-#' @import shinyDatetimePickers
+#' @importFrom shinyWidgets updateAirDateInput
 #' 
 
 single_chart_server <- function(id, r6){
@@ -114,24 +114,37 @@ single_chart_server <- function(id, r6){
 #        bindEvent(input$draw, ignoreNULL=FALSE)
       
       new_date <- reactive({
-        input$date + lubridate::days(input$number)
+          add_datetime(input$date, unit = input$unit, value = input$value)
       }) %>% bindEvent(input$add)
       
-    output[["chart"]] <- renderPlot({
+      another_new_date <- reactive({
+        minus_datetime(input$date, unit = input$unit, value = input$value)
+      }) %>% bindEvent(input$minus)
       
-      data <- planet_position()$planetary_position
-      data <- data[!(row.names(data) %in% "true_node"),]
-      draw_whole_sign_chart(data)
+      observeEvent(input$add,
+           shinyWidgets::updateAirDateInput(session, "date", value=new_date())
+      )
       
-    }, width=800, height=600, res=72)
+      observeEvent(input$minus,
+                   shinyWidgets::updateAirDateInput(session, "date", value=another_new_date())
+      )
+
+      
+      output[["chart"]] <- renderPlot({
+      
+        data <- planet_position()$planetary_position
+        data <- data[!(row.names(data) %in% "true_node"),]
+        draw_whole_sign_chart(data)
+      
+      }, width=800, height=600, res=72)
     
-    output[["Datetime"]] <- renderText({
+      output[["Datetime"]] <- renderText({
       
-      if(is.null(input$add)) {
-        as.character(input$date)
-      } else {
-        as.character(new_date())
-      }
+        if(input$add < 1) {
+          c(as.character(input$date), as.character(input$unit))
+        } else {
+          c(as.character(new_date()), as.character(input$unit), as.character(another_new_date()))
+        }
          
     })
     
