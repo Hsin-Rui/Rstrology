@@ -31,7 +31,8 @@ Imports:
     showtext,
     tibble,
     magrittr,
-    dplyr
+    dplyr,
+    shinyWidgets
 Depends: 
     R (>= 3.5.0)
 LazyData: true

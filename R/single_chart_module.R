@@ -4,7 +4,7 @@
 #' @param i18n a shiny.i18n::Translator object that links different languages
 #' 
 #' @import shiny
-#' @import shinyDatetimePickers
+#' @importFrom shinyWidgets airDatepickerInput
 #' 
 
 single_chart_ui <- function(id, i18n) {
@@ -25,10 +25,25 @@ single_chart_ui <- function(id, i18n) {
       br(),
       br(),
       p(i18n$t("click_to_change")),
-      shinyDatetimePickers::datetimePickerInput(ns("date")),
-      actionButton(ns("draw"), label=i18n$t("show_chart"))
+      shinyWidgets::airDatepickerInput(ns("date"), timepicker = TRUE, value=Sys.time())
+#      actionButton(ns("draw"), label=i18n$t("show_chart"))
+      
+
     ),
     mainPanel(
+      
+      
+      fluidRow(
+        column(width = 2,
+               actionButton(ns("minus"), label="-")),
+        column(width = 4, 
+               selectizeInput(ns("number"), label="", choices=1:30, selected=1, multiple=FALSE)),
+        column(width = 4, 
+               selectizeInput(ns("unit"), label="",choices=c("Min","Hrs","Day","Mon","Yrs"), selected="Day", multiple=FALSE)),
+        column(width = 2,
+               actionButton(ns("add"), label="+"))
+      ),
+      
       plotOutput(ns("chart"), width="100%", height="600px"),
       textOutput(ns("Datetime"))
     )
@@ -95,8 +110,12 @@ single_chart_server <- function(id, r6){
       })
       
       timezone <- reactive({ cities$tz [which(cities$city %in% input[["city"]] )] })
-      planet_position <- reactive({calculate_planet_position(date=input$date, timezone = timezone(), city = input$city)}) %>%
-        bindEvent(input$draw, ignoreNULL=FALSE)
+      planet_position <- reactive({calculate_planet_position(date=input$date, timezone = timezone(), city = input$city)}) #%>%
+#        bindEvent(input$draw, ignoreNULL=FALSE)
+      
+      new_date <- reactive({
+        input$date + lubridate::days(input$number)
+      }) %>% bindEvent(input$add)
       
     output[["chart"]] <- renderPlot({
       
@@ -108,8 +127,12 @@ single_chart_server <- function(id, r6){
     
     output[["Datetime"]] <- renderText({
       
-      as.character(input$date)
-      
+      if(is.null(input$add)) {
+        as.character(input$date)
+      } else {
+        as.character(new_date())
+      }
+         
     })
     
     })
