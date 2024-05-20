@@ -4,7 +4,7 @@
 \alias{examine_distance}
 \title{Examine whether elements are overlapping with each other}
 \usage{
-examine_distance(theta, criteria = 500)
+examine_distance(theta, criteria = 550)
 }
 \arguments{
 \item{theta}{a numeric vector of theta}
