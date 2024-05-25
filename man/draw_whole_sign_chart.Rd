@@ -8,6 +8,14 @@ draw_whole_sign_chart(planet_position, chart_name, date, city, country)
 }
 \arguments{
 \item{planet_position}{a data frame (obtained by calculate_planet_position)}
+
+\item{chart_name}{a character string. name of the chart}
+
+\item{date}{a datetime (POXIXct) object. Time of the chart}
+
+\item{city}{a character string. name of the city}
+
+\item{country}{a character string. name of the country}
 }
 \description{
 Visualize chart in whole sign style
