@@ -39,6 +39,7 @@ Rstrology_app <- function(...){
     })
 
     gargoyle::init("change_language")
+    gargoyle::init("update_date")
     r6_object <- DataManager$new(translation_csvs_path = "./inst/csv/", separator_csv="|")
 
     language <-  language_pick_server("mainpage", r6 = r6_object)

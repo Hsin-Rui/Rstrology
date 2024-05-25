@@ -18,22 +18,25 @@ Language selected for shinyApp. Default to Chinese.}
 \item{\code{horoscope_datetime}}{(\code{POSIXct()})\cr
 Date & time of the horoscope. Default to current datetime.}
 
-\item{\code{horoscope_timzezone}}{(\code{character()})\cr
+\item{\code{horoscope_timezone}}{(\code{character()})\cr
 Time zone. Default to Asia/Taipei}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{horoscope_timzezone}}{(\code{character()})\cr
-Time zone. Default to Asia/Taipei}
+
+\item{\code{horoscope_city}}{(\code{character()})\cr
+City with longitude & latitude. Default to Taipei City}
+
+\item{\code{planet_position}}{(\code{list()})\cr
+A list of dataf rame containing planetary positions and house cusps}
+
+\item{\code{chart}}{(\code{list()})\cr
+#' ggplot object}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-DataManager-new}{\code{DataManager$new()}}
+\item \href{#method-DataManager-update_chart}{\code{DataManager$update_chart()}}
 \item \href{#method-DataManager-clone}{\code{DataManager$clone()}}
 }
 }
@@ -46,7 +49,6 @@ Time zone. Default to Asia/Taipei}
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_languages"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_languages'><code>shiny.i18n::Translator$get_languages()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_translation_language"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_translation_language'><code>shiny.i18n::Translator$get_translation_language()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="get_translations"><a href='../../shiny.i18n/html/Translator.html#method-Translator-get_translations'><code>shiny.i18n::Translator$get_translations()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="initialize"><a href='../../shiny.i18n/html/Translator.html#method-Translator-initialize'><code>shiny.i18n::Translator$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="parse_date"><a href='../../shiny.i18n/html/Translator.html#method-Translator-parse_date'><code>shiny.i18n::Translator$parse_date()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="parse_number"><a href='../../shiny.i18n/html/Translator.html#method-Translator-parse_number'><code>shiny.i18n::Translator$parse_number()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="shiny.i18n" data-topic="Translator" data-id="set_translation_language"><a href='../../shiny.i18n/html/Translator.html#method-Translator-set_translation_language'><code>shiny.i18n::Translator$set_translation_language()</code></a></span></li>
@@ -56,6 +58,36 @@ Time zone. Default to Asia/Taipei}
 </ul>
 </details>
 }}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataManager-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataManager-new}{}}}
+\subsection{Method \code{new()}}{
+Initalize the R6 class using the original shiny.i18n Translator class initialize function
+furthermore, initialize horoscope city, calculate planatery positions & draw charts
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataManager$new(translation_csvs_path = "./inst/csv/", separator_csv = "|")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{translation_csvs_path}}{the path to the folder where the csv files for translation are stored}
+
+\item{\code{separator_csv}}{csv separator}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataManager-update_chart"></a>}}
+\if{latex}{\out{\hypertarget{method-DataManager-update_chart}{}}}
+\subsection{Method \code{update_chart()}}{
+update horoscope. Calculate planetary positions, draw chart
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataManager$update_chart()}\if{html}{\out{</div>}}
+}
+
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManager-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManager-clone}{}}}

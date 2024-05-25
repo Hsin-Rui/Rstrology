@@ -58,6 +58,8 @@ define_sign_order <- function(start_from=1){
 
 find_sign <- function(deg){
   
+  deg <- as.numeric(deg)
+  
   if(deg < 0 | deg >= 360){ rlang::abort("Values out of range. Input must be between 0 and 360") }
   if(!is.numeric(deg)) { rlang::abort("Input is not numeric") }
   
@@ -260,6 +262,9 @@ optmize_planet_position <- function(theta, planets){
 
 add_datetime <- function(start_time, unit, value){
   
+  value <- as.numeric(value)
+  unit <- as.character(unit)
+  
   if (unit=="Day") {
     new_time <- start_time + lubridate::days(value)
     } else if (unit=="Hrs") {
@@ -267,9 +272,9 @@ add_datetime <- function(start_time, unit, value){
     } else if (unit=="Min") {
     new_time <- start_time + lubridate::minutes(value)
     } else if (unit=="Mon") {
-    new_time <- start_time + months(1)
+    new_time <- start_time + months(value)
     } else {
-    new_time <- start_time + lubridate::years(1)
+    new_time <- start_time + lubridate::years(value)
   }
   
   return(new_time)
@@ -286,6 +291,9 @@ add_datetime <- function(start_time, unit, value){
 
 minus_datetime <- function(start_time, unit, value){
   
+  value <- as.numeric(value)
+  unit <- as.character(unit)
+  
   if (unit=="Day") {
     new_time <- start_time - lubridate::days(value)
   } else if (unit=="Hrs") {
@@ -293,9 +301,9 @@ minus_datetime <- function(start_time, unit, value){
   } else if (unit=="Min") {
     new_time <- start_time - lubridate::minutes(value)
   } else if (unit=="Mon") {
-    new_time <- start_time - months(1)
+    new_time <- start_time - months(value)
   } else {
-    new_time <- start_time - lubridate::years(1)
+    new_time <- start_time - lubridate::years(value)
   }
   
   return(new_time)

@@ -20,7 +20,7 @@ Imports:
     rsconnect,
     shiny,
     shiny.i18n,
-    shinyDatetimePickers,
+    shinyWidgets
     shinythemes,
     swephR,
     gargoyle,
@@ -31,7 +31,6 @@ Imports:
     tibble,
     magrittr,
     dplyr,
-    shinyWidgets,
     usethis,
     readr,
     BH,
