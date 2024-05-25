@@ -20,7 +20,7 @@ Imports:
     rsconnect,
     shiny,
     shiny.i18n,
-    shinyWidgets
+    shinyWidgets,
     shinythemes,
     swephR,
     gargoyle,
