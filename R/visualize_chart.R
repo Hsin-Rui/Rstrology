@@ -103,6 +103,10 @@ draw_chart_template <- function(style="whole sign"){
 #' Visualize chart in whole sign style
 #' 
 #' @param planet_position a data frame (obtained by calculate_planet_position)
+#' @param chart_name a character string. name of the chart
+#' @param date a datetime (POXIXct) object. Time of the chart
+#' @param city a character string. name of the city
+#' @param country a character string. name of the country
 #' 
 
 draw_whole_sign_chart <- function(planet_position, chart_name, date, city, country){
