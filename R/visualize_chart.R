@@ -3,6 +3,7 @@
 #' @param style chart style (whole sign, chris brennan, others)
 #' 
 #' @importFrom showtext showtext_auto
+#' @importFrom stringr str_extract
 #' @import ggplot2
 #' 
 #' @return ggplot object (three possible empty chart templates for further plotting)
@@ -99,44 +100,12 @@ draw_chart_template <- function(style="whole sign"){
   
 }
 
-#' Load fonts to show astrological symbols
-#' 
-#' @importFrom sysfonts font_add
-#'
-
-load_fonts <- function(){
-  
-    sysfonts::font_add(family="AstroGadget", regular=here("inst/fonts/AstroGadget.ttf"))
-    sysfonts::font_add(family="HamburgSymbols", regular=here("inst/fonts/HamburgSymbols.ttf"))
-    sysfonts::font_add(family="AstroDotBasic", regular=here("inst/fonts/AstroDotBasic.ttf"))
-    
-}
-
-#' Calculate x and y of a circle
-#' 
-#' @param r rate of the circle
-#' @param ... all other argumebts
-#' 
-#' @importFrom tibble tibble
-#' @import magrittr
-#' 
-
-get_circle_coords <- function(r = 1, ...) {
-  tibble::tibble(theta = seq(0, 2 * pi, ...),
-                 x     = cos(theta) * r,
-                 y     = sin(theta) * r)
-}
-
-#' Visualize chart in whole sign stype
+#' Visualize chart in whole sign style
 #' 
 #' @param planet_position a data frame (obtained by calculate_planet_position)
 #' 
 
-draw_whole_sign_chart <- function(planet_position){
-  
-  # dat <-calculate_planet_position(as.POSIXct("1990-12-19 08:05:00", tz="Asia/Taipei"), city=cities$city[1])
-  # planet_position <- dat$planetary_position
-  # planet_position <- planet_position[!row.names(planet_position) %in% "true_node", ]
+draw_whole_sign_chart <- function(planet_position, chart_name, date, city, country){
   
   load_fonts()
   showtext_auto()
@@ -221,17 +190,35 @@ draw_whole_sign_chart <- function(planet_position){
   retrograde_coord <- get_circle_coords(r=0.56, length.out=36000)
   retrograde_x <- retrograde_coord$x [new_theta] [planet_position$speed < 0]
   retrograde_y <- retrograde_coord$y [new_theta] [planet_position$speed < 0]
-
-  p +
-    ## put on zodiac signs
-    geom_point(aes(x=planet_x_on_circle, y=planet_y_on_circle), color=planet_position$planet_color)+
-    ## put on planetary glyphs
-    geom_text(aes(x=planet_x_glyphs, y=planet_y_glyphs, label=names(new_theta)), family=planet_position$font_gpyphs, size=planet_position$font_size)+
-    ## draw lines to clearly indicate planetary position
-    geom_segment(aes(x=lines_x, xend=lines_end_x, y=lines_y, yend=lines_end_y), color="grey65") +
-    geom_text(aes(x=planet_sign_x, y=planet_sign_y, label=zodiac_sign[planet_position$sign]), family="HamburgSymbols", color=planet_position$planet_color)+
-    geom_text(aes(x=deg_x, y=deg_y, label=deg), size=3.1, color=degree_color) +
-    geom_text(aes(x=min_x, y=min_y, label=minute), size=2.9, color=degree_color) +
-    geom_text(aes(x=retrograde_x, y=retrograde_y, label="R"), size=2.4, color="darkred")
- 
+  
+  ## format date
+  date <- format(date)
+  
+  ## format city
+  city <- stringr::str_extract(city, "(^[^0-9]{2,}),", group = 1)
+  
+  suppressMessages(#print(
+    
+    p +
+      ## put on zodiac signs
+      geom_point(aes(x=planet_x_on_circle, y=planet_y_on_circle), color=planet_position$planet_color)+
+      ## put on planetary glyphs
+      geom_text(aes(x=planet_x_glyphs, y=planet_y_glyphs, label=names(new_theta)), family=planet_position$font_gpyphs, size=planet_position$font_size)+
+      ## draw lines to clearly indicate planetary position
+      geom_segment(aes(x=lines_x, xend=lines_end_x, y=lines_y, yend=lines_end_y), color="grey65") +
+      ## planet symbols
+      geom_text(aes(x=planet_sign_x, y=planet_sign_y, label=zodiac_sign[planet_position$sign]), family="HamburgSymbols", color=planet_position$planet_color)+
+      ## degrees
+      geom_text(aes(x=deg_x, y=deg_y, label=deg), size=3.1, color=degree_color) +
+      ## minutes
+      geom_text(aes(x=min_x, y=min_y, label=minute), size=2.9, color=degree_color) +
+      ## mark retrograde planets
+      geom_text(aes(x=retrograde_x, y=retrograde_y, label="R"), size=2.4, color="darkred")+
+      ## chart information
+      xlim(c(-1.10, 1.10))+
+      ylim(c(-1.10, 1.10))+
+      geom_text(aes(x=c(-1.05, -1.05, -1.05, -1.05), y=c(1.05, 0.99, 0.93, 0.87),label=c(chart_name, date, city, country)),
+                vjust="inward", hjust="inward", size=3.5)
+  
+    )#)
 }

@@ -4,7 +4,7 @@
 #' @param timezone A string of time zone. It has to be time zone that lubridate recognizes. Default is "Asia/Taipei"
 #' 
 #' @importFrom lubridate year month day hour minute is.POSIXct
-#' @importFrom swephR swe_date_conversion
+#' @importFrom swephR swe_date_conversion swe_utc_time_zone
 #' @importFrom rlang abort
 #' 
 #' @return An integer of Julian Day
@@ -15,9 +15,11 @@ date_to_jd <- function(date, timezone="Asia/Taipei"){
   
   if (isFALSE(is.POSIXct(date))) rlang::abort(message="input is not POSIXct")
   
-  date <- as.character(date)
-  date <- lubridate::as_datetime(as.character(date), tz="Asia/Taipei")
+  date <- as.character(date) # convert input into character string
+  date <- lubridate::as_datetime(as.character(date), tz=timezone) # convert into POSIXct with correct timezone
+  date <- lubridate::as_datetime(date, tz="UTC") # convert the time to UTC
   
+  # extract components of that UTC time
   year <- lubridate::year(date)
   month <- lubridate::month(date)
   day <- lubridate::day(date)
@@ -26,6 +28,7 @@ date_to_jd <- function(date, timezone="Asia/Taipei"){
   
   hour <- hour + minute/60
   
+  # convert into jd
   jd <- swephR::swe_date_conversion(year,month,day,hour,"g")$jd
   
   return(jd)
@@ -435,4 +438,32 @@ reorder_west_planets <- function(theta, new_theta){
   
   new <- dplyr::case_when(new > 36000 ~ new - 36000, TRUE ~ new)
   return(new)
+}
+
+#' Load fonts to show astrological symbols
+#' 
+#' @importFrom sysfonts font_add
+#'
+
+load_fonts <- function(){
+  
+  sysfonts::font_add(family="AstroGadget", regular=here("inst/fonts/AstroGadget.ttf"))
+  sysfonts::font_add(family="HamburgSymbols", regular=here("inst/fonts/HamburgSymbols.ttf"))
+  sysfonts::font_add(family="AstroDotBasic", regular=here("inst/fonts/AstroDotBasic.ttf"))
+  
+}
+
+#' Calculate x and y of a circle
+#' 
+#' @param r rate of the circle
+#' @param ... all other argumebts
+#' 
+#' @importFrom tibble tibble
+#' @import magrittr
+#' 
+
+get_circle_coords <- function(r = 1, ...) {
+  tibble::tibble(theta = seq(0, 2 * pi, ...),
+                 x     = cos(theta) * r,
+                 y     = sin(theta) * r)
 }

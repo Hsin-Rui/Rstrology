@@ -109,6 +109,7 @@ single_chart_server <- function(id, r6){
         r6$horoscope_timezone <- cities$tz [which(cities$city %in% input[["city"]] )] 
         r6$horoscope_city <- cities$city [which(cities$city %in% input[["city"]] )]
         r6$horoscope_datetime <- input$date
+        r6$horoscope_country <- cities$country [which(cities$city %in% input[["city"]] )]
         r6$update_chart()
         gargoyle::trigger("update_date")
         
@@ -146,7 +147,7 @@ single_chart_server <- function(id, r6){
       output[["Datetime"]] <- renderText({
         
         gargoyle::watch("update_date")
-        as.character(r6$horoscope_datetime)
+        as.character(r6$horoscope_timezone)
         
         })
     
