@@ -4,7 +4,6 @@
 #' @param i18n a shiny.i18n::Translator object that links different languages
 #' 
 #' @import shiny
-#' @import shinyDatetimePickers
 #' 
 
 mainpage_ui <- function(id, i18n){

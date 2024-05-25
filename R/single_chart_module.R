@@ -25,8 +25,8 @@ single_chart_ui <- function(id, i18n) {
       br(),
       br(),
       p(i18n$t("click_to_change")),
-      shinyWidgets::airDatepickerInput(ns("date"), timepicker = TRUE, value=Sys.time())
-#      actionButton(ns("draw"), label=i18n$t("show_chart"))
+      shinyWidgets::airDatepickerInput(ns("date"), timepicker = TRUE, value=Sys.time()),
+      actionButton(ns("draw"), label=i18n$t("show_chart"))
       
 
     ),
@@ -74,7 +74,6 @@ update_select_input_server <- function(id, r6){
 #' @param r6 R6 object to help with communication between modules (for translation etc.)
 #' 
 #' @import shiny
-#' @importFrom shinyWidgets updateAirDateInput
 #' 
 
 single_chart_server <- function(id, r6){
@@ -95,6 +94,7 @@ single_chart_server <- function(id, r6){
         if(input$more_cities){
           
           updateSelectizeInput(session, "city", choices=all_cities(), selected = all_cities()[1], server=TRUE)
+          
         }
         
         else{
@@ -104,36 +104,39 @@ single_chart_server <- function(id, r6){
         }
       })
       
-      timezone <- reactive({ cities$tz [which(cities$city %in% input[["city"]] )] })
-      planet_position <- reactive({calculate_planet_position(date=input$date, timezone = timezone(), city = input$city)}) #%>%
-#        bindEvent(input$draw, ignoreNULL=FALSE)
+     observeEvent(input$draw, {
+        
+        r6$horoscope_timezone <- cities$tz [which(cities$city %in% input[["city"]] )] 
+        r6$horoscope_city <- cities$city [which(cities$city %in% input[["city"]] )]
+        r6$horoscope_datetime <- input$date
+        r6$update_chart()
+        gargoyle::trigger("update_date")
+        
+    }, ignoreInit = TRUE, ignoreNULL = TRUE)
       
-      new_date <- reactive({
-          add_datetime(input$date, unit = input$unit, value = input$value)
-      }) %>% bindEvent(input$add)
+      observeEvent(input$add, {
+        
+        r6$horoscope_datetime  <- add_datetime(r6$horoscope_datetime, unit = input$unit, value = input$value)
+        r6$update_chart()
+        gargoyle::trigger("update_date")
+        
+      })
       
-      another_new_date <- reactive({
-        minus_datetime(input$date, unit = input$unit, value = input$value)
-      }) %>% bindEvent(input$minus)
-      
-      observeEvent(input$add,
-           shinyWidgets::updateAirDateInput(session, "date", value=new_date())
-      )
-      
-      observeEvent(input$minus,
-                   shinyWidgets::updateAirDateInput(session, "date", value=another_new_date())
-      )
+      observeEvent(input$minus, {
+        
+        r6$horoscope_datetime <- minus_datetime(r6$horoscope_datetime, unit = input$unit, value = input$value)
+        r6$update_chart()
+        gargoyle::trigger("update_date")
+        
+      })
 
       
       output[["chart"]] <- renderImage({
         
+        gargoyle::watch("update_date")
         outfile <- tempfile(fileext=".jpg")
-      
-        data <- planet_position()$planetary_position
-        data <- data[!(row.names(data) %in% "true_node"),]
-        
         jpeg(outfile, width=600,height=600, pointsize = 24,res=96,bg="white")
-        print(draw_whole_sign_chart(data))
+        print(r6$chart)
         dev.off()
         
         list(src=outfile)
@@ -141,14 +144,11 @@ single_chart_server <- function(id, r6){
       }, deleteFile = T)
     
       output[["Datetime"]] <- renderText({
-      
-        if(input$add < 1) {
-          c(as.character(input$date), as.character(input$unit))
-        } else {
-          c(as.character(new_date()), as.character(input$unit), as.character(another_new_date()))
-        }
-         
-    })
+        
+        gargoyle::watch("update_date")
+        as.character(r6$horoscope_datetime)
+        
+        })
     
     })
 }
