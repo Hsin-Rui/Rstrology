@@ -24,11 +24,17 @@ Time zone. Default to Asia/Taipei}
 \item{\code{horoscope_city}}{(\code{character()})\cr
 City with longitude & latitude. Default to Taipei City}
 
+\item{\code{horoscope_country}}{(\code{character()})\cr
+Country}
+
 \item{\code{planet_position}}{(\code{list()})\cr
 A list of dataf rame containing planetary positions and house cusps}
 
 \item{\code{chart}}{(\code{list()})\cr
 #' ggplot object}
+
+\item{\code{chart_name}}{(\code{character()})\cr
+name of the chart}
 }
 \if{html}{\out{</div>}}
 }

@@ -2,13 +2,13 @@
 % Please edit documentation in R/visualize_chart.R
 \name{draw_whole_sign_chart}
 \alias{draw_whole_sign_chart}
-\title{Visualize chart in whole sign stype}
+\title{Visualize chart in whole sign style}
 \usage{
-draw_whole_sign_chart(planet_position)
+draw_whole_sign_chart(planet_position, chart_name, date, city, country)
 }
 \arguments{
 \item{planet_position}{a data frame (obtained by calculate_planet_position)}
 }
 \description{
-Visualize chart in whole sign stype
+Visualize chart in whole sign style
 }
