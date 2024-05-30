@@ -35,7 +35,8 @@ Imports:
     readr,
     BH,
     ggplot2 (>= 3.5.1),
-    progress
+    progress,
+    tidyr
 Depends: 
     R (>= 3.5.0)
 LazyData: true
