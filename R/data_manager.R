@@ -34,6 +34,13 @@ DataManager <- R6::R6Class(
     #' @field chart_name (`character()`)\cr
     #' name of the chart
     chart_name = "Transits",
+    #' @field selected_planets (`character()`)\cr
+    #' name of the chart
+    selected_planets = c("sun","moon","mercury","venus","mars","jupiter","saturn","uranus","neptune","pluto",
+                         "chiron","mean_node","asc","mc","vertex"),
+    #' @field aspect_table
+    #' a data frame of aspects
+    aspect_table = NULL,
     
     #' @description
     #' Initalize the R6 class using the original shiny.i18n Translator class initialize function
@@ -43,20 +50,27 @@ DataManager <- R6::R6Class(
     #' @param separator_csv csv separator
     #' 
     initialize = function(translation_csvs_path = "./inst/csv/", separator_csv="|"){
+      
       super$initialize(translation_csvs_path=translation_csvs_path, separator_csv=separator_csv)
+      
       self$horoscope_city <- cities$city [1]
       self$horoscope_country <- cities$country [cities$city %in% self$horoscope_city]
       self$update_chart()
+      
     },
     
     #' @description
     #' update horoscope. Calculate planetary positions, draw chart
     #' 
     update_chart = function(){
+      
       self$planet_position <- calculate_planet_position(self$horoscope_datetime, self$horoscope_timezone, self$horoscope_city)
       data <- self$planet_position$planetary_position
-      data <- data[!(row.names(data) %in% "true_node"),]
-      self$chart <- draw_whole_sign_chart(data, self$chart_name, self$horoscope_datetime, self$horoscope_city, self$horoscope_country)
+      data <- data[(row.names(data) %in% self$selected_planets),]
+      self$aspect_table <- calculate_aspect(data)
+      self$planet_position$planetary_position <- data
+      self$chart <- draw_whole_sign_chart(data, self$chart_name, self$horoscope_datetime, self$horoscope_city, self$horoscope_country, self$aspect_table)
+      
     }
   )
 )

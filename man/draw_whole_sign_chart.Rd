@@ -4,7 +4,14 @@
 \alias{draw_whole_sign_chart}
 \title{Visualize chart in whole sign style}
 \usage{
-draw_whole_sign_chart(planet_position, chart_name, date, city, country)
+draw_whole_sign_chart(
+  planet_position,
+  chart_name,
+  date,
+  city,
+  country,
+  aspect_table
+)
 }
 \arguments{
 \item{planet_position}{a data frame (obtained by calculate_planet_position)}
@@ -16,6 +23,8 @@ draw_whole_sign_chart(planet_position, chart_name, date, city, country)
 \item{city}{a character string. name of the city}
 
 \item{country}{a character string. name of the country}
+
+\item{aspect_table}{a data frame of aspects}
 }
 \description{
 Visualize chart in whole sign style

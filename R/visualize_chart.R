@@ -100,6 +100,23 @@ draw_chart_template <- function(style="whole sign"){
   
 }
 
+#' Convert planet degree to theta
+#' 
+#' @param deg a vector of planetary degrees
+#' @param starting_deg a number of degree for theta which corresponds to the x=-0.9, y=0 of the chart
+#' 
+
+convert_degree_to_theta <- function(deg, starting_deg){
+  
+  new_deg <- deg - starting_deg # re-scaling
+  new_deg [new_deg < 0] <- new_deg [new_deg < 0] + 360 # position (on the circle) of planets
+  
+  theta <- as.integer(new_deg /360 *36000) + 1
+  
+  return(theta)
+  
+}
+
 #' Visualize chart in whole sign style
 #' 
 #' @param planet_position a data frame (obtained by calculate_planet_position)
@@ -107,9 +124,13 @@ draw_chart_template <- function(style="whole sign"){
 #' @param date a datetime (POXIXct) object. Time of the chart
 #' @param city a character string. name of the city
 #' @param country a character string. name of the country
+#' @param aspect_table a data frame of aspects
+#' 
+#' @importFrom dplyr filter
+#' @import ggplot2
 #' 
 
-draw_whole_sign_chart <- function(planet_position, chart_name, date, city, country){
+draw_whole_sign_chart <- function(planet_position, chart_name, date, city, country, aspect_table){
   
   load_fonts()
   showtext_auto()
@@ -148,10 +169,7 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
   coords_lines <- get_circle_coords(r=0.87, length.out=36000)
   
   ## x and y of geom_point for exact planetary position (r = 0.9)
-  planet_on_circle <- as.vector(planet_position$deg - starting_deg) # re-scaling
-  planet_on_circle [planet_on_circle < 0] <- planet_on_circle [planet_on_circle < 0] + 360 # position (on the circle) of planets
-
-  planet_theta <- as.integer(planet_on_circle /360 *36000) + 1
+  planet_theta <- convert_degree_to_theta(planet_position$deg, starting_deg)
   planet_x_on_circle <- coords_planet_points$x [planet_theta[order(planet_theta)]]
   planet_y_on_circle <- coords_planet_points$y [planet_theta[order(planet_theta)]]
   
@@ -201,7 +219,27 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
   ## format city
   city <- stringr::str_extract(city, "(^[^0-9]{2,}),", group = 1)
   
-  suppressMessages(#print(
+  ## 3. aspect lines
+  
+  aspect_table <-
+    aspect_table %>%
+    dplyr::filter(aspect != "conjunction")
+  
+  aspect_table$theta_p1 <- convert_degree_to_theta(aspect_table$deg_p1, starting_deg)
+  aspect_table$theta_p2 <- convert_degree_to_theta(aspect_table$deg_p2, starting_deg)
+  
+  coords_aspect_lines <- get_circle_coords(0.4, length.out=36000)
+  aspect_table$x <- coords_aspect_lines$x [aspect_table$theta_p1]
+  aspect_table$y <- coords_aspect_lines$y [aspect_table$theta_p1]
+  aspect_table$x_end <- coords_aspect_lines$x [aspect_table$theta_p2]
+  aspect_table$y_end <- coords_aspect_lines$y [aspect_table$theta_p2]
+  aspect_table$color <- dplyr::recode(aspect_table$aspect, 
+                                      "sextile"="deepskyblue2", 
+                                      "square"="brown1",
+                                      "trine"="deepskyblue4",
+                                      "opposition"="darkred")
+  
+  suppressMessages(
     
     p +
       ## put on zodiac signs
@@ -222,7 +260,9 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
       xlim(c(-1.10, 1.10))+
       ylim(c(-1.10, 1.10))+
       geom_text(aes(x=c(-1.05, -1.05, -1.05, -1.05), y=c(1.05, 0.99, 0.93, 0.87),label=c(chart_name, date, city, country)),
-                vjust="inward", hjust="inward", size=3.5)
+                vjust="inward", hjust="inward", size=3.5)+
+      ## aspect lines
+      geom_segment(data = aspect_table, aes(x=x, xend=x_end, y=y, yend=y_end), color=aspect_table$color)
   
-    )#)
+    )
 }
