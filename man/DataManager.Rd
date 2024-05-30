@@ -35,6 +35,11 @@ A list of dataf rame containing planetary positions and house cusps}
 
 \item{\code{chart_name}}{(\code{character()})\cr
 name of the chart}
+
+\item{\code{selected_planets}}{(\code{character()})\cr
+name of the chart}
+
+\item{\code{aspect_table}}{a data frame of aspects}
 }
 \if{html}{\out{</div>}}
 }
