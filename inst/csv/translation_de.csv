@@ -22,7 +22,9 @@ value_1|zh
 value_2|en
 value_3|de
 
-please_enter_data|Datum und Uhrzeit
+please_enter_data|Angaben
+
+chart_name|Name
 click_to_change|Klicke zur Eingabe
 
 country|Land

@@ -26,7 +26,7 @@ date_to_jd <- function(date, timezone="Asia/Taipei"){
   hour <- lubridate::hour(date)
   minute <- lubridate::minute(date)
   
-  hour <- hour + minute/60
+  hour <- hour + (minute/60)
   
   # convert into jd
   jd <- swephR::swe_date_conversion(year,month,day,hour,"g")$jd
