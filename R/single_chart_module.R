@@ -18,6 +18,7 @@ single_chart_ui <- function(id, i18n) {
     sidebarPanel(
       h4(i18n$t("please_enter_data")),
       br(),
+      textInput(ns("chart_name"), label=i18n$t("chart_name"), value="Transit"),
       selectizeInput(ns("country"), label=i18n$t("country"), choices=countries, selected=countries[1], multiple=FALSE),
       selectizeInput(ns("city"), label=i18n$t("city"), choices=cities$city[1], selected=cities$city[1], multiple=FALSE),
       actionButton(ns("more_cities"), label=i18n$t("more_cities")),
@@ -110,6 +111,7 @@ single_chart_server <- function(id, r6){
         r6$horoscope_city <- cities$city [which(cities$city %in% input[["city"]] )]
         r6$horoscope_datetime <- input$date
         r6$horoscope_country <- cities$country [which(cities$city %in% input[["city"]] )]
+        r6$chart_name <- input$chart_name
         r6$update_chart()
         gargoyle::trigger("update_date")
         
