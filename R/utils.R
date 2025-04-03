@@ -222,10 +222,8 @@ optmize_planet_position <- function(theta, planets){
     
   }
   
-  ## after that, some normalization is done, so that values are within range (0-36000)
-  new_theta <- new_theta [order(new_theta)]
-  names(new_theta) <- planets [original_order]
-  names(new_theta) <- convert_planet_symbol(names(new_theta))
+  ## after that, normalization is done, so that values are within range (0-36000)
+
   new_theta <- normalize_theta(new_theta)
   
   current_order <- names(new_theta)
@@ -236,19 +234,19 @@ optmize_planet_position <- function(theta, planets){
   while(isTRUE(should_continue) & m < 20) {
      
     new_theta <- rescale_planet_theta(new_theta)
+    new_theta <- normalize_theta(new_theta)
     should_continue <- examine_distance(new_theta)
     m <- m+1
     
   }
   
   ## Final check, when planets are in 6 & 7 house, there could be problems (0 degree & 359 degree are next to each other)
+  
   has_western_planets <- (TRUE %in% (new_theta < 1000)) & (TRUE %in% (new_theta > 35000))
   
   if (isTRUE(has_western_planets)) {
     new_theta <- reorder_west_planets(theta, new_theta)
   }
-  
-  new_theta <- new_theta [match(current_order, names(new_theta))]
   
   return(new_theta)
   
@@ -411,32 +409,39 @@ rescale_planet_theta <- function(x){
 
 reorder_west_planets <- function(theta, new_theta){
   
-  original <- dplyr::case_when(dplyr::between(theta, 0, 3000) ~ theta + 36000, TRUE ~ theta)
-  new <- dplyr::case_when(dplyr::between(new_theta, 0, 3000) ~ new_theta + 36000, TRUE ~ new_theta)
+  original <- dplyr::case_when(dplyr::between(theta, 0, 4000) ~ theta + 36000, TRUE ~ theta)
+  new <- dplyr::case_when(dplyr::between(new_theta, 0, 4000) ~ new_theta + 36000, TRUE ~ new_theta)
   needs_rescale <- examine_distance(new)
   
-  if(isTRUE(needs_rescale)) new <- rescale_planet_theta(new)
-  
-  original_order <- sort(original)
-  new_order <- sort(new)
-  
-  start_from <- which(names(new_order) %in% names(original_order)[1])
-  if(start_from != 1) {
-    position <- c(start_from:length(original_order), 1:(start_from)-1)
-    new_order <- new_order[position]
-  }
-  
-  needs_reorder <- FALSE %in% (names(original_order) == names(new_order))
-  
-  if(isTRUE(needs_reorder)) {
+  if (isTRUE(needs_rescale)) {
+
+    should_continue <- examine_distance(new)
     
-    original <- sort(original)
-    new <- sort(new)
-    names(new) <- names(original)
+    m <- 0
+    while(isTRUE(should_continue) & m < 5) {
+      
+      new <- adjust_planet_theta(new)
+      should_continue <- examine_distance(new)
+      m <- m + 1
+      
+    }
     
   }
+  asc_theta <- original [names(original) %in% "P"]
+  original <- original - asc_theta
+  original [original < 0] <- original [original < 0]  + 36000
   
-  new <- dplyr::case_when(new > 36000 ~ new - 36000, TRUE ~ new)
+  original_order<- names(sort(original))
+  
+  new_asc_degree <- new [names(new) %in% "P"]
+  new <- new - new_asc_degree
+  new [new < 0] <- new[new < 0 ] + 36000
+  
+  new <- sort(new)
+  names(new) <- original_order
+  
+  
+  new <- normalize_theta(new + new_asc_degree)
   return(new)
 }
 

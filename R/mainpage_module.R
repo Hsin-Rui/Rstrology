@@ -12,18 +12,18 @@ mainpage_ui <- function(id, i18n){
   
   fluidPage(
     includeCSS("./inst/www/custom.css"),
-    sidebarPanel(
-      radioButtons(ns("language"),
-                   "",
-                   selected="zh",
-                   choiceNames = c("",
-                                   "English",
-                                   "Deutsch"),
-                   choiceValues = c("zh",
-                                    "en",
-                                    "de")),
-      width = 12,
-    ),
+    # sidebarPanel(
+    #   radioButtons(ns("language"),
+    #                "",
+    #                selected="zh",
+    #                choiceNames = c("",
+    #                                "English",
+    #                                "Deutsch"),
+    #                choiceValues = c("zh",
+    #                                 "en",
+    #                                 "de")),
+    #   width = 12,
+    # ),
       tags$div(id="readmehere",
                div(id="readmediv",
                     includeHTML(i18n$get_translations()["ui_mainpage_readmefile","zh"])))
