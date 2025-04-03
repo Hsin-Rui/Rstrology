@@ -169,49 +169,49 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
   coords_lines <- get_circle_coords(r=0.87, length.out=36000)
   
   ## x and y of geom_point for exact planetary position (r = 0.9)
-  planet_theta <- convert_degree_to_theta(planet_position$deg, starting_deg)
-  planet_x_on_circle <- coords_planet_points$x [planet_theta[order(planet_theta)]]
-  planet_y_on_circle <- coords_planet_points$y [planet_theta[order(planet_theta)]]
+  planet_position$planet_theta <- convert_degree_to_theta(planet_position$deg, starting_deg)
+  planet_x_on_circle <- coords_planet_points$x [planet_position$planet_theta]
+  planet_y_on_circle <- coords_planet_points$y [planet_position$planet_theta]
   
   ## determine the position of planet glyphs
   
-  new_theta <- optmize_planet_position(planet_theta, planets = selected_elements)
+  new_theta <- optmize_planet_position(planet_position$planet_theta, planets = selected_elements)
+  planet_position$planet <- row.names(planet_position)
+  planet_position <- planet_position %>% left_join(data.frame(planet_glyphs=names(new_theta), new_theta), by="planet_glyphs")
   
-  planet_x_glyphs <- coords_planet_glyphs$x [new_theta] 
-  planet_y_glyphs <- coords_planet_glyphs$y [new_theta]
+  planet_x_glyphs <- coords_planet_glyphs$x [planet_position$new_theta] 
+  planet_y_glyphs <- coords_planet_glyphs$y [planet_position$new_theta]
   
-  planet_position <- planet_position[match(names(new_theta), planet_position$planet_glyphs),]
-  
-  replaced <- planet_theta[order(planet_theta)] != new_theta # check which elements have been moved for better plotting
+  replaced <- planet_position$planet_theta != planet_position$new_theta # check which elements have been moved for better plotting
 
   ## draw lines only for those being manipulated
-  lines_end_x <- coords_lines$x [new_theta] [replaced]
-  lines_end_y <- coords_lines$y [new_theta] [replaced]
-  lines_x <- coords_planet_points$x [planet_theta[order(planet_theta)]] [replaced]
-  lines_y <- coords_planet_points$y [planet_theta[order(planet_theta)]] [replaced]
+  lines_end_x <- coords_lines$x [planet_position$new_theta] [replaced]
+  lines_end_y <- coords_lines$y [planet_position$new_theta] [replaced]
+  lines_x <- coords_planet_points$x [planet_position$planet_theta] [replaced]
+  lines_y <- coords_planet_points$y [planet_position$planet_theta] [replaced]
   
   ## sign glyphs to indicate position
   planet_sign_coord <- get_circle_coords(r=0.66, length.out=36000)
-  planet_sign_x <- planet_sign_coord$x [new_theta]
-  planet_sign_y <- planet_sign_coord$y [new_theta]
+  planet_sign_x <- planet_sign_coord$x [planet_position$new_theta]
+  planet_sign_y <- planet_sign_coord$y [planet_position$new_theta]
   
   ## degree
   deg <- paste(planet_position$deg_in_sign, "\u00b0", sep="")
   deg_coord <- get_circle_coords(r=0.73, length.out=36000)
-  deg_x <- deg_coord$x [new_theta]
-  deg_y <- deg_coord$y [new_theta]
+  deg_x <- deg_coord$x [planet_position$new_theta]
+  deg_y <- deg_coord$y [planet_position$new_theta]
   
   ## minutes
   minute <- paste(planet_position$min_in_sign, "'", sep="")
   min_coord <- get_circle_coords(r=0.6, length.out=36000)
-  min_x <- min_coord$x [new_theta] 
-  min_y <- min_coord$y [new_theta]
+  min_x <- min_coord$x [planet_position$new_theta] 
+  min_y <- min_coord$y [planet_position$new_theta]
   
   ## retrograde planets
   degree_color <- dplyr::case_when(planet_position$speed < 0 ~ "darkred", TRUE ~ "black")
   retrograde_coord <- get_circle_coords(r=0.56, length.out=36000)
-  retrograde_x <- retrograde_coord$x [new_theta] [planet_position$speed < 0]
-  retrograde_y <- retrograde_coord$y [new_theta] [planet_position$speed < 0]
+  retrograde_x <- retrograde_coord$x [planet_position$new_theta] [planet_position$speed < 0]
+  retrograde_y <- retrograde_coord$y [planet_position$new_theta] [planet_position$speed < 0]
   
   ## format date
   date <- format(date)
@@ -245,7 +245,7 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
       ## put on zodiac signs
       geom_point(aes(x=planet_x_on_circle, y=planet_y_on_circle), color=planet_position$planet_color)+
       ## put on planetary glyphs
-      geom_text(aes(x=planet_x_glyphs, y=planet_y_glyphs, label=names(new_theta)), family=planet_position$font_gpyphs, size=planet_position$font_size)+
+      geom_text(aes(x=planet_x_glyphs, y=planet_y_glyphs, label=planet_position$planet_glyphs), family=planet_position$font_gpyphs, size=planet_position$font_size)+
       ## draw lines to clearly indicate planetary position
       geom_segment(aes(x=lines_x, xend=lines_end_x, y=lines_y, yend=lines_end_y), color="grey65") +
       ## planet symbols
