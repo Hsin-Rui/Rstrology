@@ -174,7 +174,6 @@ draw_whole_sign_chart <- function(planet_position, chart_name, date, city, count
   planet_y_on_circle <- coords_planet_points$y [planet_position$planet_theta]
   
   ## determine the position of planet glyphs
-  
   new_theta <- optmize_planet_position(planet_position$planet_theta, planets = selected_elements)
   planet_position$planet <- row.names(planet_position)
   planet_position <- planet_position %>% left_join(data.frame(planet_glyphs=names(new_theta), new_theta), by="planet_glyphs")
