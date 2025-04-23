@@ -210,6 +210,7 @@ optmize_planet_position <- function(theta, planets){
   original_order <- order(theta)
   
   ## 1. this is the first method: starts from the sun, looks for planets that are too close, move them away little by little in iteration
+  
   new_theta <- adjust_planet_theta(theta)  
   should_continue <- examine_distance(new_theta)
 
@@ -225,7 +226,6 @@ optmize_planet_position <- function(theta, planets){
   ## after that, normalization is done, so that values are within range (0-36000)
 
   new_theta <- normalize_theta(new_theta)
-  
   current_order <- names(new_theta)
   should_continue <- examine_distance(new_theta)
   
@@ -240,17 +240,56 @@ optmize_planet_position <- function(theta, planets){
     
   }
   
-  ## Final check, when planets are in 6 & 7 house, there could be problems (0 degree & 359 degree are next to each other)
+  ## reorder plantes (using original order and apply to new order)
   
-  has_western_planets <- (TRUE %in% (new_theta < 1000)) & (TRUE %in% (new_theta > 35000))
+  new <- reorder_planets(theta, new_theta)
   
-  if (isTRUE(has_western_planets)) {
-    new_theta <- reorder_west_planets(theta, new_theta)
+  ## the last procedure could be problematic, in this case, we will try to use a different order
+  
+  distance <- calculate_theta_distance(new, theta)
+  
+  if (distance > 5000) {
+   
+    new_distance <- c(distance, rep(NA, 14))
+    
+    m <- 2
+    while (distance > 5000){
+      
+      new <- reorder_planets(theta, new_theta, pl = m)
+      new_distance[m] <- calculate_theta_distance(new, theta)
+      
+      m <- m + 1
+      
+      if (m == 16) {
+        
+        new <- reorder_planets(theta, new_theta, pl = which(new_distance %in% min(new_distance)))
+        break
+        
+      }
+    }
+    
   }
   
+  new_theta <- new
   return(new_theta)
   
 }
+
+#' Calculate differences in distance of plantes after optimizing plotting positions
+#'
+#' @param new_theta new theta (a named numeric factor)
+#' @param theta original theta (a named numeric factor)
+#' @importFrom dplyr between
+#' 
+
+calculate_theta_distance <- function(new_theta, theta) {
+  
+  distance <- abs(new_theta[names(theta)] - theta)
+  distance [between(distance, 33000, 35999)] <- distance [between(distance, 33000, 35999)] - 33000
+  sum(distance)
+  
+}
+
 
 #' Given start time, unit, and value, generate a new date time string
 #'
@@ -403,14 +442,15 @@ rescale_planet_theta <- function(x){
 #' 
 #' @param theta original theta vector
 #' @param new_theta manipulated theta vector
+#' @param pl a numeric number from 1 to 15
 #' 
 #' @importFrom dplyr between case_when
 #' 
 
-reorder_west_planets <- function(theta, new_theta){
+reorder_planets <- function(theta, new_theta, pl = 1){
   
-  original <- dplyr::case_when(dplyr::between(theta, 0, 4000) ~ theta + 36000, TRUE ~ theta)
-  new <- dplyr::case_when(dplyr::between(new_theta, 0, 4000) ~ new_theta + 36000, TRUE ~ new_theta)
+  original <- dplyr::case_when(dplyr::between(theta, 0, 6000) ~ theta + 36000, TRUE ~ theta)
+  new <- dplyr::case_when(dplyr::between(new_theta, 0, 6000) ~ new_theta + 36000, TRUE ~ new_theta)
   needs_rescale <- examine_distance(new)
   
   if (isTRUE(needs_rescale)) {
@@ -427,21 +467,21 @@ reorder_west_planets <- function(theta, new_theta){
     }
     
   }
-  asc_theta <- original [names(original) %in% "P"]
-  original <- original - asc_theta
-  original [original < 0] <- original [original < 0]  + 36000
+  
+  original <- original - 18001
   
   original_order<- names(sort(original))
+  first_element <- new[original_order [pl]]
   
-  new_asc_degree <- new [names(new) %in% "P"]
-  new <- new - new_asc_degree
-  new [new < 0] <- new[new < 0 ] + 36000
-  
+  new <- new - first_element
+  new [new < 0] <- new [new < 0] + 36000
+
   new <- sort(new)
   names(new) <- original_order
   
+  new <- normalize_theta(new + first_element)
+  if (TRUE %in% (new > 36000)) new <- normalize_theta(new)
   
-  new <- normalize_theta(new + new_asc_degree)
   return(new)
 }
 
